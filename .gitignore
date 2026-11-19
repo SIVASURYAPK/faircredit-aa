@@ -32,3 +32,5 @@ tests/tmp/
 # OS
 .DS_Store
 Thumbs.db
+Data_Engineering/data/
+Data_Engineering/tests/tmp/
