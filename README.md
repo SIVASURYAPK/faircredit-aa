@@ -1,47 +1,20 @@
-# Faircredit — Synthetic Data Generator
+# faircredit-aa
 
-Alternate-data credit scoring for Indian gig workers and MSMEs.  
-No public dataset has the right features, so we **generate synthetic raw records**
-(dated transactions), then a separate pipeline computes features from them.
+Alternate-data credit scoring for gig workers and MSMEs in India: consent-based cash-flow signals, explainable scores, and a fairness audit.
 
-## Project layout
+## Structure
+- `Data_Engineering/` : synthetic data generator, feature pipeline, validation scripts, backend API (in progress)
+  - `generator/` : raw synthetic data (seeded, reproducible)
+  - `features/` : builds the 19 model features from the raw tables
+  - `tests/`, `docs/` : tests and data dictionary
+- Other team members' modules (frontend, model, fairness) are added alongside.
 
-```
-generator/   – synthetic data generation (this module)
-features/    – feature pipeline (computed later)
-api/         – FastAPI serving layer (later)
-tests/       – pytest suite
-data/raw/    – generated CSVs (git-ignored)
-data/        – credit.db SQLite database (git-ignored)
-docs/        – design notes
-```
+## Data
+Data files are not stored in Git (`Data_Engineering/data/` is git-ignored). All data is synthetic. `features_final_v1.csv` is the official features file and `protected_attrs.csv` holds the protected attributes. Both are shared separately.
 
-## Quick start
-
-```bash
-# 1. Create and activate a virtual environment
-python -m venv venv
-
-# Windows (PowerShell):
-.\venv\Scripts\Activate.ps1
-
-# macOS / Linux:
-source venv/bin/activate
-
-# 2. Install dependencies
-pip install -r requirements.txt
-
-# 3. Generate data for 5000 applicants
-python -m generator.run
-
-# 4. Run tests
-pytest tests/ -v
-```
-
-## Design decisions
-
-- Raw records only — the feature pipeline is intentionally separate.
-- Protected attributes (gender, region, age_band) are stored in their own table
-  and are **never** used in income generation or labelling to avoid built-in bias.
-- Default label is derived from hidden traits (reliability, volatility, shock
-  exposure) + noise — not from any single observable feature.
+## Reproduce (run from inside `Data_Engineering/`, seed 42)
+1. `python -m generator.run_generator`
+2. `python -m generator.protected_extra`
+3. `python run_pipeline.py`
+4. `python merge_target.py`
+5. `python final_check.py`
