@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environment
+venv/
+.venv/
+env/
+
+# Data (generated — do not commit large files)
+data/credit.db
+data/raw/*.csv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Pytest / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+tests/tmp/
+
+# OS
+.DS_Store
+Thumbs.db
+Data_Engineering/data/
+Data_Engineering/tests/tmp/
