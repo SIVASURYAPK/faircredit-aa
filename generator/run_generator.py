@@ -23,6 +23,7 @@ What this script does (in order):
 
 import argparse
 import os
+import sys
 import sqlite3
 from datetime import date
 
@@ -52,6 +53,14 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--as-of-date", type=str, default=config.AS_OF_DATE,
         help=f"Cutoff date YYYY-MM-DD (default: {config.AS_OF_DATE})",
+    )
+    parser.add_argument(
+        "--db-path", type=str, default=config.DB_PATH,
+        help=f"SQLite database path (default: {config.DB_PATH})",
+    )
+    parser.add_argument(
+        "--csv-dir", type=str, default=config.CSV_DIR,
+        help=f"CSV directory path (default: {config.CSV_DIR})",
     )
     return parser.parse_args()
 
@@ -157,6 +166,34 @@ def run(n: int, seed: int, as_of_date: date) -> dict[str, pd.DataFrame]:
 # Persistence helpers
 # ---------------------------------------------------------------------------
 
+def _assert_not_production_paths(db_path: str = None, csv_dir: str = None, n: int = None) -> None:
+    """
+    Safety guard: refuse to overwrite production paths (data/credit.db or data/raw)
+    when running under tests or when running with a test/reduced subset (n < config.N_APPLICANTS).
+    Tests and smoke runs must write to a temporary folder (e.g. pytest tmp_path or tests/tmp/).
+    """
+    is_pytest = "PYTEST_CURRENT_TEST" in os.environ or "pytest" in sys.modules
+
+    prod_db = os.path.abspath(config.DB_PATH)
+    prod_csv = os.path.abspath(config.CSV_DIR)
+
+    is_prod_db = db_path and os.path.abspath(db_path) == prod_db
+    is_prod_csv = csv_dir and os.path.abspath(csv_dir) == prod_csv
+
+    if is_pytest and (is_prod_db or is_prod_csv):
+        raise RuntimeError(
+            f"Tests must write ONLY to a temporary folder (e.g. pytest tmp_path or tests/tmp/), "
+            f"never to production paths {config.DB_PATH} or {config.CSV_DIR}."
+        )
+
+    if n is not None and n < config.N_APPLICANTS and (is_prod_db or is_prod_csv):
+        raise ValueError(
+            f"Safety block: Refusing to overwrite production dataset with a reduced test run "
+            f"(n={n} < {config.N_APPLICANTS}). Specify a temporary output directory via "
+            f"--db-path and --csv-dir (e.g. tests/tmp/)."
+        )
+
+
 def save_to_sqlite(tables: dict[str, pd.DataFrame], db_path: str) -> None:
     """
     Write all DataFrames to SQLite.
@@ -164,6 +201,10 @@ def save_to_sqlite(tables: dict[str, pd.DataFrame], db_path: str) -> None:
     pandas .to_sql() does the heavy lifting: it creates the table if it
     doesn't exist and replaces it if it does (if_exists="replace").
     """
+    # Safety guard: refuse to overwrite production paths when running under pytest.
+    # Tests must pass a tmp_path-based db_path, never config.DB_PATH directly.
+    _assert_not_production_paths(db_path=db_path)
+
     os.makedirs(os.path.dirname(db_path), exist_ok=True)
     print(f"Writing to SQLite: {db_path}")
 
@@ -186,6 +227,8 @@ def save_to_csv(tables: dict[str, pd.DataFrame], csv_dir: str) -> None:
     """
     Write each DataFrame to a CSV file in csv_dir/.
     """
+    _assert_not_production_paths(csv_dir=csv_dir)
+
     os.makedirs(csv_dir, exist_ok=True)
     print(f"Writing CSVs to: {csv_dir}/")
 
@@ -236,7 +279,9 @@ if __name__ == "__main__":
     args       = parse_args()
     as_of_date = date.fromisoformat(args.as_of_date)
 
+    _assert_not_production_paths(db_path=args.db_path, csv_dir=args.csv_dir, n=args.n)
+
     tables = run(n=args.n, seed=args.seed, as_of_date=as_of_date)
-    save_to_sqlite(tables, config.DB_PATH)
-    save_to_csv(tables, config.CSV_DIR)
+    save_to_sqlite(tables, args.db_path)
+    save_to_csv(tables, args.csv_dir)
     print_summary(tables)

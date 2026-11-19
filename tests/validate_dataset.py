@@ -33,7 +33,8 @@ EXPECTED_FEATURES = {
 
 # FIX 1: added age_band and region (our protected column names)
 FORBIDDEN_PROTECTED_COLS = {"gender", "caste", "religion", "age", "age_group", "age_band",
-                            "region", "pin_code", "latitude", "longitude"}
+                            "region", "pin_code", "latitude", "longitude",
+                            "urban_rural", "shg_member", "language"}
 
 def validate_dataset(df: pd.DataFrame, is_training: bool = True) -> bool:
     errors = []

@@ -14,7 +14,7 @@ One row per applicant. This is the master identity table.
 ---
 
 ## Table: `protected_attributes`
-Demographic data stored in isolation. **Never used** in feature computation or label derivation.
+Demographic and geographic data stored in isolation. **Never used** in feature computation or label derivation.
 
 | Column | Type | Description |
 |---|---|---|
@@ -22,8 +22,40 @@ Demographic data stored in isolation. **Never used** in feature computation or l
 | `gender` | TEXT | `male`, `female`, `non_binary` |
 | `region` | TEXT | `north`, `south`, `east`, `west`, `northeast` |
 | `age_band` | TEXT | `18-25`, `26-35`, `36-45`, `46-55`, `55+` |
+| `urban_rural` | TEXT | Geographic classification: `urban`, `semi_urban`, `rural` |
+| `shg_member` | TEXT | Self-Help Group membership: `yes`, `no` |
+| `language` | TEXT | Primary language spoken |
+| `pin_code` | TEXT | 6-digit postal code string |
 
-> **Fairness note:** These columns are audited post-training for disparate impact. They must not appear in any other table.
+> **Fairness note:** These columns are audited post-training for disparate impact. They must not appear in any other table and are blocked from the feature set.
+
+### Extended Demographic & Geographic Attributes Specification
+
+> **Disclaimer:** All distributions, conditional probabilities, and demographic parameters detailed below are **synthetic assumptions for simulation purposes only**, not real empirical statistics or census data.
+
+1. **`urban_rural`**: Independent distribution across all applicants.
+   - `urban`: 45%
+   - `semi_urban`: 25%
+   - `rural`: 30%
+
+2. **`shg_member`** (`yes` / `no`): Self-Help Group membership, conditioned on `gender`.
+   - `female`: P(yes) = 25%
+   - `male`: P(yes) = 4%
+   - `non_binary`: P(yes) = 10%
+
+3. **`language`**: Primary language spoken, conditioned on `region` with an English share (~5%) across all regions (probabilities normalized to sum to 1.0):
+   - `north`: Hindi (80%), Punjabi (15%), English (5%)
+   - `west`: Marathi (40%), Gujarati (35%), Hindi (20%), English (5%)
+   - `south`: Tamil (35%), Telugu (30%), Kannada (20%), Malayalam (10%), English (5%)
+   - `east`: Bengali (55%), Odia (25%), Hindi (15%), English (5%)
+   - `northeast`: Assamese (50%), Bengali (30%), Hindi (15%), English (5%)
+
+4. **`pin_code`**: A 6-digit string (stored strictly as text/string to preserve leading digits). Prefix determined by `region`, remaining digits drawn uniformly at random:
+   - `north`: Starts with `1` or `2` (5 remaining random digits)
+   - `west`: Starts with `3` or `4` (5 remaining random digits)
+   - `south`: Starts with `5` or `6` (5 remaining random digits)
+   - `east`: Starts with `7` or `8` (5 remaining random digits)
+   - `northeast`: Starts with `78` or `79` (4 remaining random digits)
 
 ---
 

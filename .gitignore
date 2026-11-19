@@ -27,6 +27,7 @@ data/raw/*.csv
 .pytest_cache/
 .coverage
 htmlcov/
+tests/tmp/
 
 # OS
 .DS_Store

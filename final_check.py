@@ -20,7 +20,8 @@ INT_COLS = ["longest_zero_income_gap_days", "missed_payment_count_6m", "bills_du
 INCOME_COLS = ["avg_monthly_inflow", "median_monthly_inflow", "seasonality_adjusted_income"]
 UNIT_COLS = ["active_day_ratio", "on_time_bill_rate", "shock_severity"]
 PROTECTED = {"gender", "caste", "religion", "age", "age_group", "age_band", "region",
-             "pin_code", "latitude", "longitude"}
+             "pin_code", "latitude", "longitude",
+             "urban_rural", "shg_member", "language"}
 
 FEAT_PATH = "data/features_final.csv"
 PROT_PATH = "data/protected_attrs.csv"
