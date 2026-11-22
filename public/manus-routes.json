@@ -1,0 +1,11 @@
+{
+  "routes": [
+    { "path": "/", "title": "FairCredit AA" },
+    { "path": "/login", "title": "Sign in | FairCredit AA" },
+    { "path": "/dashboard", "title": "Underwriting dashboard | FairCredit AA" },
+    { "path": "/verified", "title": "Verified accounts | FairCredit AA" },
+    { "path": "/settings", "title": "Settings | FairCredit AA" },
+    { "path": "/profile", "title": "Verified profile | FairCredit AA" },
+    { "path": "/support", "title": "Contact and grievance desk | FairCredit AA" }
+  ]
+}
