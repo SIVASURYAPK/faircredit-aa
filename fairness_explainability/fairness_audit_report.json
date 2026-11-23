@@ -1,0 +1,2780 @@
+{
+  "report_type": "two_model_fairness_audit",
+  "simulation_only": true,
+  "primary_model": "logistic_regression",
+  "model_name": "logistic_regression",
+  "model_versions": [
+    "1.0.0"
+  ],
+  "dataset": {
+    "features_path": "C:\\Users\\Priya S\\Downloads\\faircredit-aa\\data\\raw\\features_final_v1.csv",
+    "protected_path": "C:\\Users\\Priya S\\Downloads\\faircredit-aa\\data\\raw\\protected_attrs.csv",
+    "total_financial_records": 5000,
+    "total_protected_records": 5000,
+    "test_records": 750,
+    "evaluation_split": "test",
+    "split_method": "src.preprocessing.split_dataset",
+    "same_applicants_for_both_models": true
+  },
+  "target_definition": {
+    "0": "Non-default",
+    "1": "Default",
+    "positive_fairness_label": "Non-default (TARGET=0)"
+  },
+  "decision_context": {
+    "requested_loan_amount": 10000,
+    "requested_tenure_months": 6,
+    "observation_window_months": 12,
+    "currency": "INR",
+    "hypothetical": true
+  },
+  "decision_definition": {
+    "positive_decision": "APPROVE",
+    "other_decisions_are_positive": false
+  },
+  "overall_results": {
+    "sample_count": 750,
+    "approval_count": 0,
+    "review_count": 540,
+    "decline_count": 210,
+    "approval_rate": 0.0,
+    "review_rate": 0.72,
+    "decline_rate": 0.28,
+    "decision_counts": {
+      "REVIEW": 540,
+      "DECLINE": 210
+    },
+    "actual_non_default_count": 656,
+    "actual_default_count": 94,
+    "mean_predicted_default_probability": 0.1294,
+    "mean_credit_score": 626.1187
+  },
+  "policy_fairness": {
+    "gender": {
+      "sample_count": 750,
+      "positive_prediction_count": 0,
+      "positive_prediction_rate": 0.0,
+      "group_metrics": {
+        "female": {
+          "sample_count": 247,
+          "non_default_count": 222,
+          "default_count": 25,
+          "positive_prediction_rate": 0.0,
+          "true_positive_rate": 0.0,
+          "false_positive_rate": 0.0
+        },
+        "male": {
+          "sample_count": 235,
+          "non_default_count": 198,
+          "default_count": 37,
+          "positive_prediction_rate": 0.0,
+          "true_positive_rate": 0.0,
+          "false_positive_rate": 0.0
+        },
+        "non_binary": {
+          "sample_count": 268,
+          "non_default_count": 236,
+          "default_count": 32,
+          "positive_prediction_rate": 0.0,
+          "true_positive_rate": 0.0,
+          "false_positive_rate": 0.0
+        }
+      },
+      "disparate_impact_ratio": null,
+      "equal_opportunity_difference": 0.0,
+      "equalized_odds_difference": 0.0,
+      "review_status": "INSUFFICIENT_EVIDENCE",
+      "warnings": [
+        "No positive predictions. Approval fairness cannot be established."
+      ],
+      "group_policy_outcomes": {
+        "female": {
+          "sample_count": 247,
+          "non_default_count": 222,
+          "default_count": 25,
+          "approval_count": 0,
+          "review_count": 182,
+          "decline_count": 65,
+          "approval_rate": 0.0,
+          "review_rate": 0.7368,
+          "decline_rate": 0.2632,
+          "good_repayer_approval_rate": 0.0,
+          "default_repayer_approval_rate": 0.0,
+          "mean_predicted_default_probability": 0.1268,
+          "mean_credit_score": 627.4008,
+          "policy_reason_counts": {
+            "HIGH_DEFAULT_PROBABILITY": 65,
+            "MODERATE_DEFAULT_PROBABILITY": 182
+          }
+        },
+        "male": {
+          "sample_count": 235,
+          "non_default_count": 198,
+          "default_count": 37,
+          "approval_count": 0,
+          "review_count": 165,
+          "decline_count": 70,
+          "approval_rate": 0.0,
+          "review_rate": 0.7021,
+          "decline_rate": 0.2979,
+          "good_repayer_approval_rate": 0.0,
+          "default_repayer_approval_rate": 0.0,
+          "mean_predicted_default_probability": 0.1329,
+          "mean_credit_score": 624.4468,
+          "policy_reason_counts": {
+            "HIGH_DEFAULT_PROBABILITY": 70,
+            "MODERATE_DEFAULT_PROBABILITY": 165
+          }
+        },
+        "non_binary": {
+          "sample_count": 268,
+          "non_default_count": 236,
+          "default_count": 32,
+          "approval_count": 0,
+          "review_count": 193,
+          "decline_count": 75,
+          "approval_rate": 0.0,
+          "review_rate": 0.7201,
+          "decline_rate": 0.2799,
+          "good_repayer_approval_rate": 0.0,
+          "default_repayer_approval_rate": 0.0,
+          "mean_predicted_default_probability": 0.1287,
+          "mean_credit_score": 626.403,
+          "policy_reason_counts": {
+            "HIGH_DEFAULT_PROBABILITY": 75,
+            "MODERATE_DEFAULT_PROBABILITY": 193
+          }
+        }
+      }
+    },
+    "region": {
+      "sample_count": 750,
+      "positive_prediction_count": 0,
+      "positive_prediction_rate": 0.0,
+      "group_metrics": {
+        "east": {
+          "sample_count": 157,
+          "non_default_count": 140,
+          "default_count": 17,
+          "positive_prediction_rate": 0.0,
+          "true_positive_rate": 0.0,
+          "false_positive_rate": 0.0
+        },
+        "north": {
+          "sample_count": 130,
+          "non_default_count": 111,
+          "default_count": 19,
+          "positive_prediction_rate": 0.0,
+          "true_positive_rate": 0.0,
+          "false_positive_rate": 0.0
+        },
+        "northeast": {
+          "sample_count": 146,
+          "non_default_count": 132,
+          "default_count": 14,
+          "positive_prediction_rate": 0.0,
+          "true_positive_rate": 0.0,
+          "false_positive_rate": 0.0
+        },
+        "south": {
+          "sample_count": 178,
+          "non_default_count": 151,
+          "default_count": 27,
+          "positive_prediction_rate": 0.0,
+          "true_positive_rate": 0.0,
+          "false_positive_rate": 0.0
+        },
+        "west": {
+          "sample_count": 139,
+          "non_default_count": 122,
+          "default_count": 17,
+          "positive_prediction_rate": 0.0,
+          "true_positive_rate": 0.0,
+          "false_positive_rate": 0.0
+        }
+      },
+      "disparate_impact_ratio": null,
+      "equal_opportunity_difference": 0.0,
+      "equalized_odds_difference": 0.0,
+      "review_status": "INSUFFICIENT_EVIDENCE",
+      "warnings": [
+        "No positive predictions. Approval fairness cannot be established."
+      ],
+      "group_policy_outcomes": {
+        "east": {
+          "sample_count": 157,
+          "non_default_count": 140,
+          "default_count": 17,
+          "approval_count": 0,
+          "review_count": 113,
+          "decline_count": 44,
+          "approval_rate": 0.0,
+          "review_rate": 0.7197,
+          "decline_rate": 0.2803,
+          "good_repayer_approval_rate": 0.0,
+          "default_repayer_approval_rate": 0.0,
+          "mean_predicted_default_probability": 0.1288,
+          "mean_credit_score": 626.949,
+          "policy_reason_counts": {
+            "HIGH_DEFAULT_PROBABILITY": 44,
+            "MODERATE_DEFAULT_PROBABILITY": 113
+          }
+        },
+        "north": {
+          "sample_count": 130,
+          "non_default_count": 111,
+          "default_count": 19,
+          "approval_count": 0,
+          "review_count": 90,
+          "decline_count": 40,
+          "approval_rate": 0.0,
+          "review_rate": 0.6923,
+          "decline_rate": 0.3077,
+          "good_repayer_approval_rate": 0.0,
+          "default_repayer_approval_rate": 0.0,
+          "mean_predicted_default_probability": 0.1297,
+          "mean_credit_score": 626.0923,
+          "policy_reason_counts": {
+            "HIGH_DEFAULT_PROBABILITY": 40,
+            "MODERATE_DEFAULT_PROBABILITY": 90
+          }
+        },
+        "northeast": {
+          "sample_count": 146,
+          "non_default_count": 132,
+          "default_count": 14,
+          "approval_count": 0,
+          "review_count": 110,
+          "decline_count": 36,
+          "approval_rate": 0.0,
+          "review_rate": 0.7534,
+          "decline_rate": 0.2466,
+          "good_repayer_approval_rate": 0.0,
+          "default_repayer_approval_rate": 0.0,
+          "mean_predicted_default_probability": 0.1276,
+          "mean_credit_score": 626.5274,
+          "policy_reason_counts": {
+            "HIGH_DEFAULT_PROBABILITY": 36,
+            "MODERATE_DEFAULT_PROBABILITY": 110
+          }
+        },
+        "south": {
+          "sample_count": 178,
+          "non_default_count": 151,
+          "default_count": 27,
+          "approval_count": 0,
+          "review_count": 124,
+          "decline_count": 54,
+          "approval_rate": 0.0,
+          "review_rate": 0.6966,
+          "decline_rate": 0.3034,
+          "good_repayer_approval_rate": 0.0,
+          "default_repayer_approval_rate": 0.0,
+          "mean_predicted_default_probability": 0.1333,
+          "mean_credit_score": 624.0,
+          "policy_reason_counts": {
+            "HIGH_DEFAULT_PROBABILITY": 54,
+            "MODERATE_DEFAULT_PROBABILITY": 124
+          }
+        },
+        "west": {
+          "sample_count": 139,
+          "non_default_count": 122,
+          "default_count": 17,
+          "approval_count": 0,
+          "review_count": 103,
+          "decline_count": 36,
+          "approval_rate": 0.0,
+          "review_rate": 0.741,
+          "decline_rate": 0.259,
+          "good_repayer_approval_rate": 0.0,
+          "default_repayer_approval_rate": 0.0,
+          "mean_predicted_default_probability": 0.1267,
+          "mean_credit_score": 627.4892,
+          "policy_reason_counts": {
+            "HIGH_DEFAULT_PROBABILITY": 36,
+            "MODERATE_DEFAULT_PROBABILITY": 103
+          }
+        }
+      }
+    },
+    "age_band": {
+      "sample_count": 750,
+      "positive_prediction_count": 0,
+      "positive_prediction_rate": 0.0,
+      "group_metrics": {
+        "18-25": {
+          "sample_count": 155,
+          "non_default_count": 130,
+          "default_count": 25,
+          "positive_prediction_rate": 0.0,
+          "true_positive_rate": 0.0,
+          "false_positive_rate": 0.0
+        },
+        "26-35": {
+          "sample_count": 154,
+          "non_default_count": 137,
+          "default_count": 17,
+          "positive_prediction_rate": 0.0,
+          "true_positive_rate": 0.0,
+          "false_positive_rate": 0.0
+        },
+        "36-45": {
+          "sample_count": 135,
+          "non_default_count": 121,
+          "default_count": 14,
+          "positive_prediction_rate": 0.0,
+          "true_positive_rate": 0.0,
+          "false_positive_rate": 0.0
+        },
+        "46-55": {
+          "sample_count": 158,
+          "non_default_count": 137,
+          "default_count": 21,
+          "positive_prediction_rate": 0.0,
+          "true_positive_rate": 0.0,
+          "false_positive_rate": 0.0
+        },
+        "55+": {
+          "sample_count": 148,
+          "non_default_count": 131,
+          "default_count": 17,
+          "positive_prediction_rate": 0.0,
+          "true_positive_rate": 0.0,
+          "false_positive_rate": 0.0
+        }
+      },
+      "disparate_impact_ratio": null,
+      "equal_opportunity_difference": 0.0,
+      "equalized_odds_difference": 0.0,
+      "review_status": "INSUFFICIENT_EVIDENCE",
+      "warnings": [
+        "No positive predictions. Approval fairness cannot be established."
+      ],
+      "group_policy_outcomes": {
+        "18-25": {
+          "sample_count": 155,
+          "non_default_count": 130,
+          "default_count": 25,
+          "approval_count": 0,
+          "review_count": 115,
+          "decline_count": 40,
+          "approval_rate": 0.0,
+          "review_rate": 0.7419,
+          "decline_rate": 0.2581,
+          "good_repayer_approval_rate": 0.0,
+          "default_repayer_approval_rate": 0.0,
+          "mean_predicted_default_probability": 0.1313,
+          "mean_credit_score": 625.3032,
+          "policy_reason_counts": {
+            "HIGH_DEFAULT_PROBABILITY": 40,
+            "MODERATE_DEFAULT_PROBABILITY": 115
+          }
+        },
+        "26-35": {
+          "sample_count": 154,
+          "non_default_count": 137,
+          "default_count": 17,
+          "approval_count": 0,
+          "review_count": 106,
+          "decline_count": 48,
+          "approval_rate": 0.0,
+          "review_rate": 0.6883,
+          "decline_rate": 0.3117,
+          "good_repayer_approval_rate": 0.0,
+          "default_repayer_approval_rate": 0.0,
+          "mean_predicted_default_probability": 0.1298,
+          "mean_credit_score": 625.9935,
+          "policy_reason_counts": {
+            "HIGH_DEFAULT_PROBABILITY": 48,
+            "MODERATE_DEFAULT_PROBABILITY": 106
+          }
+        },
+        "36-45": {
+          "sample_count": 135,
+          "non_default_count": 121,
+          "default_count": 14,
+          "approval_count": 0,
+          "review_count": 100,
+          "decline_count": 35,
+          "approval_rate": 0.0,
+          "review_rate": 0.7407,
+          "decline_rate": 0.2593,
+          "good_repayer_approval_rate": 0.0,
+          "default_repayer_approval_rate": 0.0,
+          "mean_predicted_default_probability": 0.1256,
+          "mean_credit_score": 627.7481,
+          "policy_reason_counts": {
+            "HIGH_DEFAULT_PROBABILITY": 35,
+            "MODERATE_DEFAULT_PROBABILITY": 100
+          }
+        },
+        "46-55": {
+          "sample_count": 158,
+          "non_default_count": 137,
+          "default_count": 21,
+          "approval_count": 0,
+          "review_count": 108,
+          "decline_count": 50,
+          "approval_rate": 0.0,
+          "review_rate": 0.6835,
+          "decline_rate": 0.3165,
+          "good_repayer_approval_rate": 0.0,
+          "default_repayer_approval_rate": 0.0,
+          "mean_predicted_default_probability": 0.1318,
+          "mean_credit_score": 624.8418,
+          "policy_reason_counts": {
+            "HIGH_DEFAULT_PROBABILITY": 50,
+            "MODERATE_DEFAULT_PROBABILITY": 108
+          }
+        },
+        "55+": {
+          "sample_count": 148,
+          "non_default_count": 131,
+          "default_count": 17,
+          "approval_count": 0,
+          "review_count": 111,
+          "decline_count": 37,
+          "approval_rate": 0.0,
+          "review_rate": 0.75,
+          "decline_rate": 0.25,
+          "good_repayer_approval_rate": 0.0,
+          "default_repayer_approval_rate": 0.0,
+          "mean_predicted_default_probability": 0.1278,
+          "mean_credit_score": 626.9797,
+          "policy_reason_counts": {
+            "HIGH_DEFAULT_PROBABILITY": 37,
+            "MODERATE_DEFAULT_PROBABILITY": 111
+          }
+        }
+      }
+    },
+    "urban_rural": {
+      "sample_count": 750,
+      "positive_prediction_count": 0,
+      "positive_prediction_rate": 0.0,
+      "group_metrics": {
+        "rural": {
+          "sample_count": 207,
+          "non_default_count": 174,
+          "default_count": 33,
+          "positive_prediction_rate": 0.0,
+          "true_positive_rate": 0.0,
+          "false_positive_rate": 0.0
+        },
+        "semi_urban": {
+          "sample_count": 179,
+          "non_default_count": 160,
+          "default_count": 19,
+          "positive_prediction_rate": 0.0,
+          "true_positive_rate": 0.0,
+          "false_positive_rate": 0.0
+        },
+        "urban": {
+          "sample_count": 364,
+          "non_default_count": 322,
+          "default_count": 42,
+          "positive_prediction_rate": 0.0,
+          "true_positive_rate": 0.0,
+          "false_positive_rate": 0.0
+        }
+      },
+      "disparate_impact_ratio": null,
+      "equal_opportunity_difference": 0.0,
+      "equalized_odds_difference": 0.0,
+      "review_status": "INSUFFICIENT_EVIDENCE",
+      "warnings": [
+        "No positive predictions. Approval fairness cannot be established."
+      ],
+      "group_policy_outcomes": {
+        "rural": {
+          "sample_count": 207,
+          "non_default_count": 174,
+          "default_count": 33,
+          "approval_count": 0,
+          "review_count": 149,
+          "decline_count": 58,
+          "approval_rate": 0.0,
+          "review_rate": 0.7198,
+          "decline_rate": 0.2802,
+          "good_repayer_approval_rate": 0.0,
+          "default_repayer_approval_rate": 0.0,
+          "mean_predicted_default_probability": 0.1278,
+          "mean_credit_score": 627.2415,
+          "policy_reason_counts": {
+            "HIGH_DEFAULT_PROBABILITY": 58,
+            "MODERATE_DEFAULT_PROBABILITY": 149
+          }
+        },
+        "semi_urban": {
+          "sample_count": 179,
+          "non_default_count": 160,
+          "default_count": 19,
+          "approval_count": 0,
+          "review_count": 120,
+          "decline_count": 59,
+          "approval_rate": 0.0,
+          "review_rate": 0.6704,
+          "decline_rate": 0.3296,
+          "good_repayer_approval_rate": 0.0,
+          "default_repayer_approval_rate": 0.0,
+          "mean_predicted_default_probability": 0.1365,
+          "mean_credit_score": 621.4022,
+          "policy_reason_counts": {
+            "HIGH_DEFAULT_PROBABILITY": 59,
+            "MODERATE_DEFAULT_PROBABILITY": 120
+          }
+        },
+        "urban": {
+          "sample_count": 364,
+          "non_default_count": 322,
+          "default_count": 42,
+          "approval_count": 0,
+          "review_count": 271,
+          "decline_count": 93,
+          "approval_rate": 0.0,
+          "review_rate": 0.7445,
+          "decline_rate": 0.2555,
+          "good_repayer_approval_rate": 0.0,
+          "default_repayer_approval_rate": 0.0,
+          "mean_predicted_default_probability": 0.1268,
+          "mean_credit_score": 627.7995,
+          "policy_reason_counts": {
+            "HIGH_DEFAULT_PROBABILITY": 93,
+            "MODERATE_DEFAULT_PROBABILITY": 271
+          }
+        }
+      }
+    }
+  },
+  "model_risk_fairness": {
+    "diagnostic_definition": "Positive if predicted default probability <= decline threshold.",
+    "diagnostic_pd_threshold": 0.15,
+    "is_official_approval": false,
+    "attributes": {
+      "gender": {
+        "sample_count": 750,
+        "positive_prediction_count": 540,
+        "positive_prediction_rate": 0.72,
+        "group_metrics": {
+          "female": {
+            "sample_count": 247,
+            "non_default_count": 222,
+            "default_count": 25,
+            "positive_prediction_rate": 0.7368,
+            "true_positive_rate": 0.7387,
+            "false_positive_rate": 0.72
+          },
+          "male": {
+            "sample_count": 235,
+            "non_default_count": 198,
+            "default_count": 37,
+            "positive_prediction_rate": 0.7021,
+            "true_positive_rate": 0.7576,
+            "false_positive_rate": 0.4054
+          },
+          "non_binary": {
+            "sample_count": 268,
+            "non_default_count": 236,
+            "default_count": 32,
+            "positive_prediction_rate": 0.7201,
+            "true_positive_rate": 0.7373,
+            "false_positive_rate": 0.5938
+          }
+        },
+        "disparate_impact_ratio": 0.9529,
+        "equal_opportunity_difference": 0.0203,
+        "equalized_odds_difference": 0.3146,
+        "review_status": "REVIEW_NEEDED",
+        "warnings": []
+      },
+      "region": {
+        "sample_count": 750,
+        "positive_prediction_count": 540,
+        "positive_prediction_rate": 0.72,
+        "group_metrics": {
+          "east": {
+            "sample_count": 157,
+            "non_default_count": 140,
+            "default_count": 17,
+            "positive_prediction_rate": 0.7197,
+            "true_positive_rate": 0.7214,
+            "false_positive_rate": 0.7059
+          },
+          "north": {
+            "sample_count": 130,
+            "non_default_count": 111,
+            "default_count": 19,
+            "positive_prediction_rate": 0.6923,
+            "true_positive_rate": 0.7117,
+            "false_positive_rate": 0.5789
+          },
+          "northeast": {
+            "sample_count": 146,
+            "non_default_count": 132,
+            "default_count": 14,
+            "positive_prediction_rate": 0.7534,
+            "true_positive_rate": 0.7652,
+            "false_positive_rate": 0.6429
+          },
+          "south": {
+            "sample_count": 178,
+            "non_default_count": 151,
+            "default_count": 27,
+            "positive_prediction_rate": 0.6966,
+            "true_positive_rate": 0.755,
+            "false_positive_rate": 0.3704
+          },
+          "west": {
+            "sample_count": 139,
+            "non_default_count": 122,
+            "default_count": 17,
+            "positive_prediction_rate": 0.741,
+            "true_positive_rate": 0.7623,
+            "false_positive_rate": 0.5882
+          }
+        },
+        "disparate_impact_ratio": 0.9189,
+        "equal_opportunity_difference": 0.0534,
+        "equalized_odds_difference": 0.3355,
+        "review_status": "REVIEW_NEEDED",
+        "warnings": []
+      },
+      "age_band": {
+        "sample_count": 750,
+        "positive_prediction_count": 540,
+        "positive_prediction_rate": 0.72,
+        "group_metrics": {
+          "18-25": {
+            "sample_count": 155,
+            "non_default_count": 130,
+            "default_count": 25,
+            "positive_prediction_rate": 0.7419,
+            "true_positive_rate": 0.7769,
+            "false_positive_rate": 0.56
+          },
+          "26-35": {
+            "sample_count": 154,
+            "non_default_count": 137,
+            "default_count": 17,
+            "positive_prediction_rate": 0.6883,
+            "true_positive_rate": 0.708,
+            "false_positive_rate": 0.5294
+          },
+          "36-45": {
+            "sample_count": 135,
+            "non_default_count": 121,
+            "default_count": 14,
+            "positive_prediction_rate": 0.7407,
+            "true_positive_rate": 0.7603,
+            "false_positive_rate": 0.5714
+          },
+          "46-55": {
+            "sample_count": 158,
+            "non_default_count": 137,
+            "default_count": 21,
+            "positive_prediction_rate": 0.6835,
+            "true_positive_rate": 0.7007,
+            "false_positive_rate": 0.5714
+          },
+          "55+": {
+            "sample_count": 148,
+            "non_default_count": 131,
+            "default_count": 17,
+            "positive_prediction_rate": 0.75,
+            "true_positive_rate": 0.7786,
+            "false_positive_rate": 0.5294
+          }
+        },
+        "disparate_impact_ratio": 0.9114,
+        "equal_opportunity_difference": 0.0779,
+        "equalized_odds_difference": 0.0779,
+        "review_status": "REVIEW_NEEDED",
+        "warnings": []
+      },
+      "urban_rural": {
+        "sample_count": 750,
+        "positive_prediction_count": 540,
+        "positive_prediction_rate": 0.72,
+        "group_metrics": {
+          "rural": {
+            "sample_count": 207,
+            "non_default_count": 174,
+            "default_count": 33,
+            "positive_prediction_rate": 0.7198,
+            "true_positive_rate": 0.7356,
+            "false_positive_rate": 0.6364
+          },
+          "semi_urban": {
+            "sample_count": 179,
+            "non_default_count": 160,
+            "default_count": 19,
+            "positive_prediction_rate": 0.6704,
+            "true_positive_rate": 0.6937,
+            "false_positive_rate": 0.4737
+          },
+          "urban": {
+            "sample_count": 364,
+            "non_default_count": 322,
+            "default_count": 42,
+            "positive_prediction_rate": 0.7445,
+            "true_positive_rate": 0.7733,
+            "false_positive_rate": 0.5238
+          }
+        },
+        "disparate_impact_ratio": 0.9005,
+        "equal_opportunity_difference": 0.0795,
+        "equalized_odds_difference": 0.1627,
+        "review_status": "REVIEW_NEEDED",
+        "warnings": []
+      }
+    }
+  },
+  "policy_reason_analysis": {
+    "overall_reason_counts": {
+      "HIGH_DEFAULT_PROBABILITY": 210,
+      "MODERATE_DEFAULT_PROBABILITY": 540
+    },
+    "reasons_by_decision": {
+      "APPROVE": {},
+      "REVIEW": {
+        "MODERATE_DEFAULT_PROBABILITY": 540
+      },
+      "DECLINE": {
+        "HIGH_DEFAULT_PROBABILITY": 210
+      }
+    },
+    "counting_method": "Applicants per reason; an applicant may have multiple reasons."
+  },
+  "protected_attributes": {
+    "gender": {
+      "sample_count": 750,
+      "positive_prediction_count": 0,
+      "positive_prediction_rate": 0.0,
+      "group_metrics": {
+        "female": {
+          "sample_count": 247,
+          "non_default_count": 222,
+          "default_count": 25,
+          "positive_prediction_rate": 0.0,
+          "true_positive_rate": 0.0,
+          "false_positive_rate": 0.0
+        },
+        "male": {
+          "sample_count": 235,
+          "non_default_count": 198,
+          "default_count": 37,
+          "positive_prediction_rate": 0.0,
+          "true_positive_rate": 0.0,
+          "false_positive_rate": 0.0
+        },
+        "non_binary": {
+          "sample_count": 268,
+          "non_default_count": 236,
+          "default_count": 32,
+          "positive_prediction_rate": 0.0,
+          "true_positive_rate": 0.0,
+          "false_positive_rate": 0.0
+        }
+      },
+      "disparate_impact_ratio": null,
+      "equal_opportunity_difference": 0.0,
+      "equalized_odds_difference": 0.0,
+      "review_status": "INSUFFICIENT_EVIDENCE",
+      "warnings": [
+        "No positive predictions. Approval fairness cannot be established."
+      ],
+      "group_policy_outcomes": {
+        "female": {
+          "sample_count": 247,
+          "non_default_count": 222,
+          "default_count": 25,
+          "approval_count": 0,
+          "review_count": 182,
+          "decline_count": 65,
+          "approval_rate": 0.0,
+          "review_rate": 0.7368,
+          "decline_rate": 0.2632,
+          "good_repayer_approval_rate": 0.0,
+          "default_repayer_approval_rate": 0.0,
+          "mean_predicted_default_probability": 0.1268,
+          "mean_credit_score": 627.4008,
+          "policy_reason_counts": {
+            "HIGH_DEFAULT_PROBABILITY": 65,
+            "MODERATE_DEFAULT_PROBABILITY": 182
+          }
+        },
+        "male": {
+          "sample_count": 235,
+          "non_default_count": 198,
+          "default_count": 37,
+          "approval_count": 0,
+          "review_count": 165,
+          "decline_count": 70,
+          "approval_rate": 0.0,
+          "review_rate": 0.7021,
+          "decline_rate": 0.2979,
+          "good_repayer_approval_rate": 0.0,
+          "default_repayer_approval_rate": 0.0,
+          "mean_predicted_default_probability": 0.1329,
+          "mean_credit_score": 624.4468,
+          "policy_reason_counts": {
+            "HIGH_DEFAULT_PROBABILITY": 70,
+            "MODERATE_DEFAULT_PROBABILITY": 165
+          }
+        },
+        "non_binary": {
+          "sample_count": 268,
+          "non_default_count": 236,
+          "default_count": 32,
+          "approval_count": 0,
+          "review_count": 193,
+          "decline_count": 75,
+          "approval_rate": 0.0,
+          "review_rate": 0.7201,
+          "decline_rate": 0.2799,
+          "good_repayer_approval_rate": 0.0,
+          "default_repayer_approval_rate": 0.0,
+          "mean_predicted_default_probability": 0.1287,
+          "mean_credit_score": 626.403,
+          "policy_reason_counts": {
+            "HIGH_DEFAULT_PROBABILITY": 75,
+            "MODERATE_DEFAULT_PROBABILITY": 193
+          }
+        }
+      }
+    },
+    "region": {
+      "sample_count": 750,
+      "positive_prediction_count": 0,
+      "positive_prediction_rate": 0.0,
+      "group_metrics": {
+        "east": {
+          "sample_count": 157,
+          "non_default_count": 140,
+          "default_count": 17,
+          "positive_prediction_rate": 0.0,
+          "true_positive_rate": 0.0,
+          "false_positive_rate": 0.0
+        },
+        "north": {
+          "sample_count": 130,
+          "non_default_count": 111,
+          "default_count": 19,
+          "positive_prediction_rate": 0.0,
+          "true_positive_rate": 0.0,
+          "false_positive_rate": 0.0
+        },
+        "northeast": {
+          "sample_count": 146,
+          "non_default_count": 132,
+          "default_count": 14,
+          "positive_prediction_rate": 0.0,
+          "true_positive_rate": 0.0,
+          "false_positive_rate": 0.0
+        },
+        "south": {
+          "sample_count": 178,
+          "non_default_count": 151,
+          "default_count": 27,
+          "positive_prediction_rate": 0.0,
+          "true_positive_rate": 0.0,
+          "false_positive_rate": 0.0
+        },
+        "west": {
+          "sample_count": 139,
+          "non_default_count": 122,
+          "default_count": 17,
+          "positive_prediction_rate": 0.0,
+          "true_positive_rate": 0.0,
+          "false_positive_rate": 0.0
+        }
+      },
+      "disparate_impact_ratio": null,
+      "equal_opportunity_difference": 0.0,
+      "equalized_odds_difference": 0.0,
+      "review_status": "INSUFFICIENT_EVIDENCE",
+      "warnings": [
+        "No positive predictions. Approval fairness cannot be established."
+      ],
+      "group_policy_outcomes": {
+        "east": {
+          "sample_count": 157,
+          "non_default_count": 140,
+          "default_count": 17,
+          "approval_count": 0,
+          "review_count": 113,
+          "decline_count": 44,
+          "approval_rate": 0.0,
+          "review_rate": 0.7197,
+          "decline_rate": 0.2803,
+          "good_repayer_approval_rate": 0.0,
+          "default_repayer_approval_rate": 0.0,
+          "mean_predicted_default_probability": 0.1288,
+          "mean_credit_score": 626.949,
+          "policy_reason_counts": {
+            "HIGH_DEFAULT_PROBABILITY": 44,
+            "MODERATE_DEFAULT_PROBABILITY": 113
+          }
+        },
+        "north": {
+          "sample_count": 130,
+          "non_default_count": 111,
+          "default_count": 19,
+          "approval_count": 0,
+          "review_count": 90,
+          "decline_count": 40,
+          "approval_rate": 0.0,
+          "review_rate": 0.6923,
+          "decline_rate": 0.3077,
+          "good_repayer_approval_rate": 0.0,
+          "default_repayer_approval_rate": 0.0,
+          "mean_predicted_default_probability": 0.1297,
+          "mean_credit_score": 626.0923,
+          "policy_reason_counts": {
+            "HIGH_DEFAULT_PROBABILITY": 40,
+            "MODERATE_DEFAULT_PROBABILITY": 90
+          }
+        },
+        "northeast": {
+          "sample_count": 146,
+          "non_default_count": 132,
+          "default_count": 14,
+          "approval_count": 0,
+          "review_count": 110,
+          "decline_count": 36,
+          "approval_rate": 0.0,
+          "review_rate": 0.7534,
+          "decline_rate": 0.2466,
+          "good_repayer_approval_rate": 0.0,
+          "default_repayer_approval_rate": 0.0,
+          "mean_predicted_default_probability": 0.1276,
+          "mean_credit_score": 626.5274,
+          "policy_reason_counts": {
+            "HIGH_DEFAULT_PROBABILITY": 36,
+            "MODERATE_DEFAULT_PROBABILITY": 110
+          }
+        },
+        "south": {
+          "sample_count": 178,
+          "non_default_count": 151,
+          "default_count": 27,
+          "approval_count": 0,
+          "review_count": 124,
+          "decline_count": 54,
+          "approval_rate": 0.0,
+          "review_rate": 0.6966,
+          "decline_rate": 0.3034,
+          "good_repayer_approval_rate": 0.0,
+          "default_repayer_approval_rate": 0.0,
+          "mean_predicted_default_probability": 0.1333,
+          "mean_credit_score": 624.0,
+          "policy_reason_counts": {
+            "HIGH_DEFAULT_PROBABILITY": 54,
+            "MODERATE_DEFAULT_PROBABILITY": 124
+          }
+        },
+        "west": {
+          "sample_count": 139,
+          "non_default_count": 122,
+          "default_count": 17,
+          "approval_count": 0,
+          "review_count": 103,
+          "decline_count": 36,
+          "approval_rate": 0.0,
+          "review_rate": 0.741,
+          "decline_rate": 0.259,
+          "good_repayer_approval_rate": 0.0,
+          "default_repayer_approval_rate": 0.0,
+          "mean_predicted_default_probability": 0.1267,
+          "mean_credit_score": 627.4892,
+          "policy_reason_counts": {
+            "HIGH_DEFAULT_PROBABILITY": 36,
+            "MODERATE_DEFAULT_PROBABILITY": 103
+          }
+        }
+      }
+    },
+    "age_band": {
+      "sample_count": 750,
+      "positive_prediction_count": 0,
+      "positive_prediction_rate": 0.0,
+      "group_metrics": {
+        "18-25": {
+          "sample_count": 155,
+          "non_default_count": 130,
+          "default_count": 25,
+          "positive_prediction_rate": 0.0,
+          "true_positive_rate": 0.0,
+          "false_positive_rate": 0.0
+        },
+        "26-35": {
+          "sample_count": 154,
+          "non_default_count": 137,
+          "default_count": 17,
+          "positive_prediction_rate": 0.0,
+          "true_positive_rate": 0.0,
+          "false_positive_rate": 0.0
+        },
+        "36-45": {
+          "sample_count": 135,
+          "non_default_count": 121,
+          "default_count": 14,
+          "positive_prediction_rate": 0.0,
+          "true_positive_rate": 0.0,
+          "false_positive_rate": 0.0
+        },
+        "46-55": {
+          "sample_count": 158,
+          "non_default_count": 137,
+          "default_count": 21,
+          "positive_prediction_rate": 0.0,
+          "true_positive_rate": 0.0,
+          "false_positive_rate": 0.0
+        },
+        "55+": {
+          "sample_count": 148,
+          "non_default_count": 131,
+          "default_count": 17,
+          "positive_prediction_rate": 0.0,
+          "true_positive_rate": 0.0,
+          "false_positive_rate": 0.0
+        }
+      },
+      "disparate_impact_ratio": null,
+      "equal_opportunity_difference": 0.0,
+      "equalized_odds_difference": 0.0,
+      "review_status": "INSUFFICIENT_EVIDENCE",
+      "warnings": [
+        "No positive predictions. Approval fairness cannot be established."
+      ],
+      "group_policy_outcomes": {
+        "18-25": {
+          "sample_count": 155,
+          "non_default_count": 130,
+          "default_count": 25,
+          "approval_count": 0,
+          "review_count": 115,
+          "decline_count": 40,
+          "approval_rate": 0.0,
+          "review_rate": 0.7419,
+          "decline_rate": 0.2581,
+          "good_repayer_approval_rate": 0.0,
+          "default_repayer_approval_rate": 0.0,
+          "mean_predicted_default_probability": 0.1313,
+          "mean_credit_score": 625.3032,
+          "policy_reason_counts": {
+            "HIGH_DEFAULT_PROBABILITY": 40,
+            "MODERATE_DEFAULT_PROBABILITY": 115
+          }
+        },
+        "26-35": {
+          "sample_count": 154,
+          "non_default_count": 137,
+          "default_count": 17,
+          "approval_count": 0,
+          "review_count": 106,
+          "decline_count": 48,
+          "approval_rate": 0.0,
+          "review_rate": 0.6883,
+          "decline_rate": 0.3117,
+          "good_repayer_approval_rate": 0.0,
+          "default_repayer_approval_rate": 0.0,
+          "mean_predicted_default_probability": 0.1298,
+          "mean_credit_score": 625.9935,
+          "policy_reason_counts": {
+            "HIGH_DEFAULT_PROBABILITY": 48,
+            "MODERATE_DEFAULT_PROBABILITY": 106
+          }
+        },
+        "36-45": {
+          "sample_count": 135,
+          "non_default_count": 121,
+          "default_count": 14,
+          "approval_count": 0,
+          "review_count": 100,
+          "decline_count": 35,
+          "approval_rate": 0.0,
+          "review_rate": 0.7407,
+          "decline_rate": 0.2593,
+          "good_repayer_approval_rate": 0.0,
+          "default_repayer_approval_rate": 0.0,
+          "mean_predicted_default_probability": 0.1256,
+          "mean_credit_score": 627.7481,
+          "policy_reason_counts": {
+            "HIGH_DEFAULT_PROBABILITY": 35,
+            "MODERATE_DEFAULT_PROBABILITY": 100
+          }
+        },
+        "46-55": {
+          "sample_count": 158,
+          "non_default_count": 137,
+          "default_count": 21,
+          "approval_count": 0,
+          "review_count": 108,
+          "decline_count": 50,
+          "approval_rate": 0.0,
+          "review_rate": 0.6835,
+          "decline_rate": 0.3165,
+          "good_repayer_approval_rate": 0.0,
+          "default_repayer_approval_rate": 0.0,
+          "mean_predicted_default_probability": 0.1318,
+          "mean_credit_score": 624.8418,
+          "policy_reason_counts": {
+            "HIGH_DEFAULT_PROBABILITY": 50,
+            "MODERATE_DEFAULT_PROBABILITY": 108
+          }
+        },
+        "55+": {
+          "sample_count": 148,
+          "non_default_count": 131,
+          "default_count": 17,
+          "approval_count": 0,
+          "review_count": 111,
+          "decline_count": 37,
+          "approval_rate": 0.0,
+          "review_rate": 0.75,
+          "decline_rate": 0.25,
+          "good_repayer_approval_rate": 0.0,
+          "default_repayer_approval_rate": 0.0,
+          "mean_predicted_default_probability": 0.1278,
+          "mean_credit_score": 626.9797,
+          "policy_reason_counts": {
+            "HIGH_DEFAULT_PROBABILITY": 37,
+            "MODERATE_DEFAULT_PROBABILITY": 111
+          }
+        }
+      }
+    },
+    "urban_rural": {
+      "sample_count": 750,
+      "positive_prediction_count": 0,
+      "positive_prediction_rate": 0.0,
+      "group_metrics": {
+        "rural": {
+          "sample_count": 207,
+          "non_default_count": 174,
+          "default_count": 33,
+          "positive_prediction_rate": 0.0,
+          "true_positive_rate": 0.0,
+          "false_positive_rate": 0.0
+        },
+        "semi_urban": {
+          "sample_count": 179,
+          "non_default_count": 160,
+          "default_count": 19,
+          "positive_prediction_rate": 0.0,
+          "true_positive_rate": 0.0,
+          "false_positive_rate": 0.0
+        },
+        "urban": {
+          "sample_count": 364,
+          "non_default_count": 322,
+          "default_count": 42,
+          "positive_prediction_rate": 0.0,
+          "true_positive_rate": 0.0,
+          "false_positive_rate": 0.0
+        }
+      },
+      "disparate_impact_ratio": null,
+      "equal_opportunity_difference": 0.0,
+      "equalized_odds_difference": 0.0,
+      "review_status": "INSUFFICIENT_EVIDENCE",
+      "warnings": [
+        "No positive predictions. Approval fairness cannot be established."
+      ],
+      "group_policy_outcomes": {
+        "rural": {
+          "sample_count": 207,
+          "non_default_count": 174,
+          "default_count": 33,
+          "approval_count": 0,
+          "review_count": 149,
+          "decline_count": 58,
+          "approval_rate": 0.0,
+          "review_rate": 0.7198,
+          "decline_rate": 0.2802,
+          "good_repayer_approval_rate": 0.0,
+          "default_repayer_approval_rate": 0.0,
+          "mean_predicted_default_probability": 0.1278,
+          "mean_credit_score": 627.2415,
+          "policy_reason_counts": {
+            "HIGH_DEFAULT_PROBABILITY": 58,
+            "MODERATE_DEFAULT_PROBABILITY": 149
+          }
+        },
+        "semi_urban": {
+          "sample_count": 179,
+          "non_default_count": 160,
+          "default_count": 19,
+          "approval_count": 0,
+          "review_count": 120,
+          "decline_count": 59,
+          "approval_rate": 0.0,
+          "review_rate": 0.6704,
+          "decline_rate": 0.3296,
+          "good_repayer_approval_rate": 0.0,
+          "default_repayer_approval_rate": 0.0,
+          "mean_predicted_default_probability": 0.1365,
+          "mean_credit_score": 621.4022,
+          "policy_reason_counts": {
+            "HIGH_DEFAULT_PROBABILITY": 59,
+            "MODERATE_DEFAULT_PROBABILITY": 120
+          }
+        },
+        "urban": {
+          "sample_count": 364,
+          "non_default_count": 322,
+          "default_count": 42,
+          "approval_count": 0,
+          "review_count": 271,
+          "decline_count": 93,
+          "approval_rate": 0.0,
+          "review_rate": 0.7445,
+          "decline_rate": 0.2555,
+          "good_repayer_approval_rate": 0.0,
+          "default_repayer_approval_rate": 0.0,
+          "mean_predicted_default_probability": 0.1268,
+          "mean_credit_score": 627.7995,
+          "policy_reason_counts": {
+            "HIGH_DEFAULT_PROBABILITY": 93,
+            "MODERATE_DEFAULT_PROBABILITY": 271
+          }
+        }
+      }
+    }
+  },
+  "models": {
+    "logistic_regression": {
+      "model_name": "logistic_regression",
+      "model_versions": [
+        "1.0.0"
+      ],
+      "overall_results": {
+        "sample_count": 750,
+        "approval_count": 0,
+        "review_count": 540,
+        "decline_count": 210,
+        "approval_rate": 0.0,
+        "review_rate": 0.72,
+        "decline_rate": 0.28,
+        "decision_counts": {
+          "REVIEW": 540,
+          "DECLINE": 210
+        },
+        "actual_non_default_count": 656,
+        "actual_default_count": 94,
+        "mean_predicted_default_probability": 0.1294,
+        "mean_credit_score": 626.1187
+      },
+      "policy_fairness": {
+        "gender": {
+          "sample_count": 750,
+          "positive_prediction_count": 0,
+          "positive_prediction_rate": 0.0,
+          "group_metrics": {
+            "female": {
+              "sample_count": 247,
+              "non_default_count": 222,
+              "default_count": 25,
+              "positive_prediction_rate": 0.0,
+              "true_positive_rate": 0.0,
+              "false_positive_rate": 0.0
+            },
+            "male": {
+              "sample_count": 235,
+              "non_default_count": 198,
+              "default_count": 37,
+              "positive_prediction_rate": 0.0,
+              "true_positive_rate": 0.0,
+              "false_positive_rate": 0.0
+            },
+            "non_binary": {
+              "sample_count": 268,
+              "non_default_count": 236,
+              "default_count": 32,
+              "positive_prediction_rate": 0.0,
+              "true_positive_rate": 0.0,
+              "false_positive_rate": 0.0
+            }
+          },
+          "disparate_impact_ratio": null,
+          "equal_opportunity_difference": 0.0,
+          "equalized_odds_difference": 0.0,
+          "review_status": "INSUFFICIENT_EVIDENCE",
+          "warnings": [
+            "No positive predictions. Approval fairness cannot be established."
+          ],
+          "group_policy_outcomes": {
+            "female": {
+              "sample_count": 247,
+              "non_default_count": 222,
+              "default_count": 25,
+              "approval_count": 0,
+              "review_count": 182,
+              "decline_count": 65,
+              "approval_rate": 0.0,
+              "review_rate": 0.7368,
+              "decline_rate": 0.2632,
+              "good_repayer_approval_rate": 0.0,
+              "default_repayer_approval_rate": 0.0,
+              "mean_predicted_default_probability": 0.1268,
+              "mean_credit_score": 627.4008,
+              "policy_reason_counts": {
+                "HIGH_DEFAULT_PROBABILITY": 65,
+                "MODERATE_DEFAULT_PROBABILITY": 182
+              }
+            },
+            "male": {
+              "sample_count": 235,
+              "non_default_count": 198,
+              "default_count": 37,
+              "approval_count": 0,
+              "review_count": 165,
+              "decline_count": 70,
+              "approval_rate": 0.0,
+              "review_rate": 0.7021,
+              "decline_rate": 0.2979,
+              "good_repayer_approval_rate": 0.0,
+              "default_repayer_approval_rate": 0.0,
+              "mean_predicted_default_probability": 0.1329,
+              "mean_credit_score": 624.4468,
+              "policy_reason_counts": {
+                "HIGH_DEFAULT_PROBABILITY": 70,
+                "MODERATE_DEFAULT_PROBABILITY": 165
+              }
+            },
+            "non_binary": {
+              "sample_count": 268,
+              "non_default_count": 236,
+              "default_count": 32,
+              "approval_count": 0,
+              "review_count": 193,
+              "decline_count": 75,
+              "approval_rate": 0.0,
+              "review_rate": 0.7201,
+              "decline_rate": 0.2799,
+              "good_repayer_approval_rate": 0.0,
+              "default_repayer_approval_rate": 0.0,
+              "mean_predicted_default_probability": 0.1287,
+              "mean_credit_score": 626.403,
+              "policy_reason_counts": {
+                "HIGH_DEFAULT_PROBABILITY": 75,
+                "MODERATE_DEFAULT_PROBABILITY": 193
+              }
+            }
+          }
+        },
+        "region": {
+          "sample_count": 750,
+          "positive_prediction_count": 0,
+          "positive_prediction_rate": 0.0,
+          "group_metrics": {
+            "east": {
+              "sample_count": 157,
+              "non_default_count": 140,
+              "default_count": 17,
+              "positive_prediction_rate": 0.0,
+              "true_positive_rate": 0.0,
+              "false_positive_rate": 0.0
+            },
+            "north": {
+              "sample_count": 130,
+              "non_default_count": 111,
+              "default_count": 19,
+              "positive_prediction_rate": 0.0,
+              "true_positive_rate": 0.0,
+              "false_positive_rate": 0.0
+            },
+            "northeast": {
+              "sample_count": 146,
+              "non_default_count": 132,
+              "default_count": 14,
+              "positive_prediction_rate": 0.0,
+              "true_positive_rate": 0.0,
+              "false_positive_rate": 0.0
+            },
+            "south": {
+              "sample_count": 178,
+              "non_default_count": 151,
+              "default_count": 27,
+              "positive_prediction_rate": 0.0,
+              "true_positive_rate": 0.0,
+              "false_positive_rate": 0.0
+            },
+            "west": {
+              "sample_count": 139,
+              "non_default_count": 122,
+              "default_count": 17,
+              "positive_prediction_rate": 0.0,
+              "true_positive_rate": 0.0,
+              "false_positive_rate": 0.0
+            }
+          },
+          "disparate_impact_ratio": null,
+          "equal_opportunity_difference": 0.0,
+          "equalized_odds_difference": 0.0,
+          "review_status": "INSUFFICIENT_EVIDENCE",
+          "warnings": [
+            "No positive predictions. Approval fairness cannot be established."
+          ],
+          "group_policy_outcomes": {
+            "east": {
+              "sample_count": 157,
+              "non_default_count": 140,
+              "default_count": 17,
+              "approval_count": 0,
+              "review_count": 113,
+              "decline_count": 44,
+              "approval_rate": 0.0,
+              "review_rate": 0.7197,
+              "decline_rate": 0.2803,
+              "good_repayer_approval_rate": 0.0,
+              "default_repayer_approval_rate": 0.0,
+              "mean_predicted_default_probability": 0.1288,
+              "mean_credit_score": 626.949,
+              "policy_reason_counts": {
+                "HIGH_DEFAULT_PROBABILITY": 44,
+                "MODERATE_DEFAULT_PROBABILITY": 113
+              }
+            },
+            "north": {
+              "sample_count": 130,
+              "non_default_count": 111,
+              "default_count": 19,
+              "approval_count": 0,
+              "review_count": 90,
+              "decline_count": 40,
+              "approval_rate": 0.0,
+              "review_rate": 0.6923,
+              "decline_rate": 0.3077,
+              "good_repayer_approval_rate": 0.0,
+              "default_repayer_approval_rate": 0.0,
+              "mean_predicted_default_probability": 0.1297,
+              "mean_credit_score": 626.0923,
+              "policy_reason_counts": {
+                "HIGH_DEFAULT_PROBABILITY": 40,
+                "MODERATE_DEFAULT_PROBABILITY": 90
+              }
+            },
+            "northeast": {
+              "sample_count": 146,
+              "non_default_count": 132,
+              "default_count": 14,
+              "approval_count": 0,
+              "review_count": 110,
+              "decline_count": 36,
+              "approval_rate": 0.0,
+              "review_rate": 0.7534,
+              "decline_rate": 0.2466,
+              "good_repayer_approval_rate": 0.0,
+              "default_repayer_approval_rate": 0.0,
+              "mean_predicted_default_probability": 0.1276,
+              "mean_credit_score": 626.5274,
+              "policy_reason_counts": {
+                "HIGH_DEFAULT_PROBABILITY": 36,
+                "MODERATE_DEFAULT_PROBABILITY": 110
+              }
+            },
+            "south": {
+              "sample_count": 178,
+              "non_default_count": 151,
+              "default_count": 27,
+              "approval_count": 0,
+              "review_count": 124,
+              "decline_count": 54,
+              "approval_rate": 0.0,
+              "review_rate": 0.6966,
+              "decline_rate": 0.3034,
+              "good_repayer_approval_rate": 0.0,
+              "default_repayer_approval_rate": 0.0,
+              "mean_predicted_default_probability": 0.1333,
+              "mean_credit_score": 624.0,
+              "policy_reason_counts": {
+                "HIGH_DEFAULT_PROBABILITY": 54,
+                "MODERATE_DEFAULT_PROBABILITY": 124
+              }
+            },
+            "west": {
+              "sample_count": 139,
+              "non_default_count": 122,
+              "default_count": 17,
+              "approval_count": 0,
+              "review_count": 103,
+              "decline_count": 36,
+              "approval_rate": 0.0,
+              "review_rate": 0.741,
+              "decline_rate": 0.259,
+              "good_repayer_approval_rate": 0.0,
+              "default_repayer_approval_rate": 0.0,
+              "mean_predicted_default_probability": 0.1267,
+              "mean_credit_score": 627.4892,
+              "policy_reason_counts": {
+                "HIGH_DEFAULT_PROBABILITY": 36,
+                "MODERATE_DEFAULT_PROBABILITY": 103
+              }
+            }
+          }
+        },
+        "age_band": {
+          "sample_count": 750,
+          "positive_prediction_count": 0,
+          "positive_prediction_rate": 0.0,
+          "group_metrics": {
+            "18-25": {
+              "sample_count": 155,
+              "non_default_count": 130,
+              "default_count": 25,
+              "positive_prediction_rate": 0.0,
+              "true_positive_rate": 0.0,
+              "false_positive_rate": 0.0
+            },
+            "26-35": {
+              "sample_count": 154,
+              "non_default_count": 137,
+              "default_count": 17,
+              "positive_prediction_rate": 0.0,
+              "true_positive_rate": 0.0,
+              "false_positive_rate": 0.0
+            },
+            "36-45": {
+              "sample_count": 135,
+              "non_default_count": 121,
+              "default_count": 14,
+              "positive_prediction_rate": 0.0,
+              "true_positive_rate": 0.0,
+              "false_positive_rate": 0.0
+            },
+            "46-55": {
+              "sample_count": 158,
+              "non_default_count": 137,
+              "default_count": 21,
+              "positive_prediction_rate": 0.0,
+              "true_positive_rate": 0.0,
+              "false_positive_rate": 0.0
+            },
+            "55+": {
+              "sample_count": 148,
+              "non_default_count": 131,
+              "default_count": 17,
+              "positive_prediction_rate": 0.0,
+              "true_positive_rate": 0.0,
+              "false_positive_rate": 0.0
+            }
+          },
+          "disparate_impact_ratio": null,
+          "equal_opportunity_difference": 0.0,
+          "equalized_odds_difference": 0.0,
+          "review_status": "INSUFFICIENT_EVIDENCE",
+          "warnings": [
+            "No positive predictions. Approval fairness cannot be established."
+          ],
+          "group_policy_outcomes": {
+            "18-25": {
+              "sample_count": 155,
+              "non_default_count": 130,
+              "default_count": 25,
+              "approval_count": 0,
+              "review_count": 115,
+              "decline_count": 40,
+              "approval_rate": 0.0,
+              "review_rate": 0.7419,
+              "decline_rate": 0.2581,
+              "good_repayer_approval_rate": 0.0,
+              "default_repayer_approval_rate": 0.0,
+              "mean_predicted_default_probability": 0.1313,
+              "mean_credit_score": 625.3032,
+              "policy_reason_counts": {
+                "HIGH_DEFAULT_PROBABILITY": 40,
+                "MODERATE_DEFAULT_PROBABILITY": 115
+              }
+            },
+            "26-35": {
+              "sample_count": 154,
+              "non_default_count": 137,
+              "default_count": 17,
+              "approval_count": 0,
+              "review_count": 106,
+              "decline_count": 48,
+              "approval_rate": 0.0,
+              "review_rate": 0.6883,
+              "decline_rate": 0.3117,
+              "good_repayer_approval_rate": 0.0,
+              "default_repayer_approval_rate": 0.0,
+              "mean_predicted_default_probability": 0.1298,
+              "mean_credit_score": 625.9935,
+              "policy_reason_counts": {
+                "HIGH_DEFAULT_PROBABILITY": 48,
+                "MODERATE_DEFAULT_PROBABILITY": 106
+              }
+            },
+            "36-45": {
+              "sample_count": 135,
+              "non_default_count": 121,
+              "default_count": 14,
+              "approval_count": 0,
+              "review_count": 100,
+              "decline_count": 35,
+              "approval_rate": 0.0,
+              "review_rate": 0.7407,
+              "decline_rate": 0.2593,
+              "good_repayer_approval_rate": 0.0,
+              "default_repayer_approval_rate": 0.0,
+              "mean_predicted_default_probability": 0.1256,
+              "mean_credit_score": 627.7481,
+              "policy_reason_counts": {
+                "HIGH_DEFAULT_PROBABILITY": 35,
+                "MODERATE_DEFAULT_PROBABILITY": 100
+              }
+            },
+            "46-55": {
+              "sample_count": 158,
+              "non_default_count": 137,
+              "default_count": 21,
+              "approval_count": 0,
+              "review_count": 108,
+              "decline_count": 50,
+              "approval_rate": 0.0,
+              "review_rate": 0.6835,
+              "decline_rate": 0.3165,
+              "good_repayer_approval_rate": 0.0,
+              "default_repayer_approval_rate": 0.0,
+              "mean_predicted_default_probability": 0.1318,
+              "mean_credit_score": 624.8418,
+              "policy_reason_counts": {
+                "HIGH_DEFAULT_PROBABILITY": 50,
+                "MODERATE_DEFAULT_PROBABILITY": 108
+              }
+            },
+            "55+": {
+              "sample_count": 148,
+              "non_default_count": 131,
+              "default_count": 17,
+              "approval_count": 0,
+              "review_count": 111,
+              "decline_count": 37,
+              "approval_rate": 0.0,
+              "review_rate": 0.75,
+              "decline_rate": 0.25,
+              "good_repayer_approval_rate": 0.0,
+              "default_repayer_approval_rate": 0.0,
+              "mean_predicted_default_probability": 0.1278,
+              "mean_credit_score": 626.9797,
+              "policy_reason_counts": {
+                "HIGH_DEFAULT_PROBABILITY": 37,
+                "MODERATE_DEFAULT_PROBABILITY": 111
+              }
+            }
+          }
+        },
+        "urban_rural": {
+          "sample_count": 750,
+          "positive_prediction_count": 0,
+          "positive_prediction_rate": 0.0,
+          "group_metrics": {
+            "rural": {
+              "sample_count": 207,
+              "non_default_count": 174,
+              "default_count": 33,
+              "positive_prediction_rate": 0.0,
+              "true_positive_rate": 0.0,
+              "false_positive_rate": 0.0
+            },
+            "semi_urban": {
+              "sample_count": 179,
+              "non_default_count": 160,
+              "default_count": 19,
+              "positive_prediction_rate": 0.0,
+              "true_positive_rate": 0.0,
+              "false_positive_rate": 0.0
+            },
+            "urban": {
+              "sample_count": 364,
+              "non_default_count": 322,
+              "default_count": 42,
+              "positive_prediction_rate": 0.0,
+              "true_positive_rate": 0.0,
+              "false_positive_rate": 0.0
+            }
+          },
+          "disparate_impact_ratio": null,
+          "equal_opportunity_difference": 0.0,
+          "equalized_odds_difference": 0.0,
+          "review_status": "INSUFFICIENT_EVIDENCE",
+          "warnings": [
+            "No positive predictions. Approval fairness cannot be established."
+          ],
+          "group_policy_outcomes": {
+            "rural": {
+              "sample_count": 207,
+              "non_default_count": 174,
+              "default_count": 33,
+              "approval_count": 0,
+              "review_count": 149,
+              "decline_count": 58,
+              "approval_rate": 0.0,
+              "review_rate": 0.7198,
+              "decline_rate": 0.2802,
+              "good_repayer_approval_rate": 0.0,
+              "default_repayer_approval_rate": 0.0,
+              "mean_predicted_default_probability": 0.1278,
+              "mean_credit_score": 627.2415,
+              "policy_reason_counts": {
+                "HIGH_DEFAULT_PROBABILITY": 58,
+                "MODERATE_DEFAULT_PROBABILITY": 149
+              }
+            },
+            "semi_urban": {
+              "sample_count": 179,
+              "non_default_count": 160,
+              "default_count": 19,
+              "approval_count": 0,
+              "review_count": 120,
+              "decline_count": 59,
+              "approval_rate": 0.0,
+              "review_rate": 0.6704,
+              "decline_rate": 0.3296,
+              "good_repayer_approval_rate": 0.0,
+              "default_repayer_approval_rate": 0.0,
+              "mean_predicted_default_probability": 0.1365,
+              "mean_credit_score": 621.4022,
+              "policy_reason_counts": {
+                "HIGH_DEFAULT_PROBABILITY": 59,
+                "MODERATE_DEFAULT_PROBABILITY": 120
+              }
+            },
+            "urban": {
+              "sample_count": 364,
+              "non_default_count": 322,
+              "default_count": 42,
+              "approval_count": 0,
+              "review_count": 271,
+              "decline_count": 93,
+              "approval_rate": 0.0,
+              "review_rate": 0.7445,
+              "decline_rate": 0.2555,
+              "good_repayer_approval_rate": 0.0,
+              "default_repayer_approval_rate": 0.0,
+              "mean_predicted_default_probability": 0.1268,
+              "mean_credit_score": 627.7995,
+              "policy_reason_counts": {
+                "HIGH_DEFAULT_PROBABILITY": 93,
+                "MODERATE_DEFAULT_PROBABILITY": 271
+              }
+            }
+          }
+        }
+      },
+      "model_risk_fairness": {
+        "diagnostic_definition": "Positive if predicted default probability <= decline threshold.",
+        "diagnostic_pd_threshold": 0.15,
+        "is_official_approval": false,
+        "attributes": {
+          "gender": {
+            "sample_count": 750,
+            "positive_prediction_count": 540,
+            "positive_prediction_rate": 0.72,
+            "group_metrics": {
+              "female": {
+                "sample_count": 247,
+                "non_default_count": 222,
+                "default_count": 25,
+                "positive_prediction_rate": 0.7368,
+                "true_positive_rate": 0.7387,
+                "false_positive_rate": 0.72
+              },
+              "male": {
+                "sample_count": 235,
+                "non_default_count": 198,
+                "default_count": 37,
+                "positive_prediction_rate": 0.7021,
+                "true_positive_rate": 0.7576,
+                "false_positive_rate": 0.4054
+              },
+              "non_binary": {
+                "sample_count": 268,
+                "non_default_count": 236,
+                "default_count": 32,
+                "positive_prediction_rate": 0.7201,
+                "true_positive_rate": 0.7373,
+                "false_positive_rate": 0.5938
+              }
+            },
+            "disparate_impact_ratio": 0.9529,
+            "equal_opportunity_difference": 0.0203,
+            "equalized_odds_difference": 0.3146,
+            "review_status": "REVIEW_NEEDED",
+            "warnings": []
+          },
+          "region": {
+            "sample_count": 750,
+            "positive_prediction_count": 540,
+            "positive_prediction_rate": 0.72,
+            "group_metrics": {
+              "east": {
+                "sample_count": 157,
+                "non_default_count": 140,
+                "default_count": 17,
+                "positive_prediction_rate": 0.7197,
+                "true_positive_rate": 0.7214,
+                "false_positive_rate": 0.7059
+              },
+              "north": {
+                "sample_count": 130,
+                "non_default_count": 111,
+                "default_count": 19,
+                "positive_prediction_rate": 0.6923,
+                "true_positive_rate": 0.7117,
+                "false_positive_rate": 0.5789
+              },
+              "northeast": {
+                "sample_count": 146,
+                "non_default_count": 132,
+                "default_count": 14,
+                "positive_prediction_rate": 0.7534,
+                "true_positive_rate": 0.7652,
+                "false_positive_rate": 0.6429
+              },
+              "south": {
+                "sample_count": 178,
+                "non_default_count": 151,
+                "default_count": 27,
+                "positive_prediction_rate": 0.6966,
+                "true_positive_rate": 0.755,
+                "false_positive_rate": 0.3704
+              },
+              "west": {
+                "sample_count": 139,
+                "non_default_count": 122,
+                "default_count": 17,
+                "positive_prediction_rate": 0.741,
+                "true_positive_rate": 0.7623,
+                "false_positive_rate": 0.5882
+              }
+            },
+            "disparate_impact_ratio": 0.9189,
+            "equal_opportunity_difference": 0.0534,
+            "equalized_odds_difference": 0.3355,
+            "review_status": "REVIEW_NEEDED",
+            "warnings": []
+          },
+          "age_band": {
+            "sample_count": 750,
+            "positive_prediction_count": 540,
+            "positive_prediction_rate": 0.72,
+            "group_metrics": {
+              "18-25": {
+                "sample_count": 155,
+                "non_default_count": 130,
+                "default_count": 25,
+                "positive_prediction_rate": 0.7419,
+                "true_positive_rate": 0.7769,
+                "false_positive_rate": 0.56
+              },
+              "26-35": {
+                "sample_count": 154,
+                "non_default_count": 137,
+                "default_count": 17,
+                "positive_prediction_rate": 0.6883,
+                "true_positive_rate": 0.708,
+                "false_positive_rate": 0.5294
+              },
+              "36-45": {
+                "sample_count": 135,
+                "non_default_count": 121,
+                "default_count": 14,
+                "positive_prediction_rate": 0.7407,
+                "true_positive_rate": 0.7603,
+                "false_positive_rate": 0.5714
+              },
+              "46-55": {
+                "sample_count": 158,
+                "non_default_count": 137,
+                "default_count": 21,
+                "positive_prediction_rate": 0.6835,
+                "true_positive_rate": 0.7007,
+                "false_positive_rate": 0.5714
+              },
+              "55+": {
+                "sample_count": 148,
+                "non_default_count": 131,
+                "default_count": 17,
+                "positive_prediction_rate": 0.75,
+                "true_positive_rate": 0.7786,
+                "false_positive_rate": 0.5294
+              }
+            },
+            "disparate_impact_ratio": 0.9114,
+            "equal_opportunity_difference": 0.0779,
+            "equalized_odds_difference": 0.0779,
+            "review_status": "REVIEW_NEEDED",
+            "warnings": []
+          },
+          "urban_rural": {
+            "sample_count": 750,
+            "positive_prediction_count": 540,
+            "positive_prediction_rate": 0.72,
+            "group_metrics": {
+              "rural": {
+                "sample_count": 207,
+                "non_default_count": 174,
+                "default_count": 33,
+                "positive_prediction_rate": 0.7198,
+                "true_positive_rate": 0.7356,
+                "false_positive_rate": 0.6364
+              },
+              "semi_urban": {
+                "sample_count": 179,
+                "non_default_count": 160,
+                "default_count": 19,
+                "positive_prediction_rate": 0.6704,
+                "true_positive_rate": 0.6937,
+                "false_positive_rate": 0.4737
+              },
+              "urban": {
+                "sample_count": 364,
+                "non_default_count": 322,
+                "default_count": 42,
+                "positive_prediction_rate": 0.7445,
+                "true_positive_rate": 0.7733,
+                "false_positive_rate": 0.5238
+              }
+            },
+            "disparate_impact_ratio": 0.9005,
+            "equal_opportunity_difference": 0.0795,
+            "equalized_odds_difference": 0.1627,
+            "review_status": "REVIEW_NEEDED",
+            "warnings": []
+          }
+        }
+      },
+      "policy_reason_analysis": {
+        "overall_reason_counts": {
+          "HIGH_DEFAULT_PROBABILITY": 210,
+          "MODERATE_DEFAULT_PROBABILITY": 540
+        },
+        "reasons_by_decision": {
+          "APPROVE": {},
+          "REVIEW": {
+            "MODERATE_DEFAULT_PROBABILITY": 540
+          },
+          "DECLINE": {
+            "HIGH_DEFAULT_PROBABILITY": 210
+          }
+        },
+        "counting_method": "Applicants per reason; an applicant may have multiple reasons."
+      }
+    },
+    "xgboost": {
+      "model_name": "xgboost",
+      "model_versions": [
+        "1.0.0"
+      ],
+      "overall_results": {
+        "sample_count": 750,
+        "approval_count": 0,
+        "review_count": 566,
+        "decline_count": 184,
+        "approval_rate": 0.0,
+        "review_rate": 0.7547,
+        "decline_rate": 0.2453,
+        "decision_counts": {
+          "REVIEW": 566,
+          "DECLINE": 184
+        },
+        "actual_non_default_count": 656,
+        "actual_default_count": 94,
+        "mean_predicted_default_probability": 0.1278,
+        "mean_credit_score": 625.9187
+      },
+      "policy_fairness": {
+        "gender": {
+          "sample_count": 750,
+          "positive_prediction_count": 0,
+          "positive_prediction_rate": 0.0,
+          "group_metrics": {
+            "female": {
+              "sample_count": 247,
+              "non_default_count": 222,
+              "default_count": 25,
+              "positive_prediction_rate": 0.0,
+              "true_positive_rate": 0.0,
+              "false_positive_rate": 0.0
+            },
+            "male": {
+              "sample_count": 235,
+              "non_default_count": 198,
+              "default_count": 37,
+              "positive_prediction_rate": 0.0,
+              "true_positive_rate": 0.0,
+              "false_positive_rate": 0.0
+            },
+            "non_binary": {
+              "sample_count": 268,
+              "non_default_count": 236,
+              "default_count": 32,
+              "positive_prediction_rate": 0.0,
+              "true_positive_rate": 0.0,
+              "false_positive_rate": 0.0
+            }
+          },
+          "disparate_impact_ratio": null,
+          "equal_opportunity_difference": 0.0,
+          "equalized_odds_difference": 0.0,
+          "review_status": "INSUFFICIENT_EVIDENCE",
+          "warnings": [
+            "No positive predictions. Approval fairness cannot be established."
+          ],
+          "group_policy_outcomes": {
+            "female": {
+              "sample_count": 247,
+              "non_default_count": 222,
+              "default_count": 25,
+              "approval_count": 0,
+              "review_count": 192,
+              "decline_count": 55,
+              "approval_rate": 0.0,
+              "review_rate": 0.7773,
+              "decline_rate": 0.2227,
+              "good_repayer_approval_rate": 0.0,
+              "default_repayer_approval_rate": 0.0,
+              "mean_predicted_default_probability": 0.1255,
+              "mean_credit_score": 627.2632,
+              "policy_reason_counts": {
+                "HIGH_DEFAULT_PROBABILITY": 55,
+                "MODERATE_DEFAULT_PROBABILITY": 192
+              }
+            },
+            "male": {
+              "sample_count": 235,
+              "non_default_count": 198,
+              "default_count": 37,
+              "approval_count": 0,
+              "review_count": 171,
+              "decline_count": 64,
+              "approval_rate": 0.0,
+              "review_rate": 0.7277,
+              "decline_rate": 0.2723,
+              "good_repayer_approval_rate": 0.0,
+              "default_repayer_approval_rate": 0.0,
+              "mean_predicted_default_probability": 0.1312,
+              "mean_credit_score": 624.0553,
+              "policy_reason_counts": {
+                "HIGH_DEFAULT_PROBABILITY": 64,
+                "MODERATE_DEFAULT_PROBABILITY": 171
+              }
+            },
+            "non_binary": {
+              "sample_count": 268,
+              "non_default_count": 236,
+              "default_count": 32,
+              "approval_count": 0,
+              "review_count": 203,
+              "decline_count": 65,
+              "approval_rate": 0.0,
+              "review_rate": 0.7575,
+              "decline_rate": 0.2425,
+              "good_repayer_approval_rate": 0.0,
+              "default_repayer_approval_rate": 0.0,
+              "mean_predicted_default_probability": 0.127,
+              "mean_credit_score": 626.3134,
+              "policy_reason_counts": {
+                "HIGH_DEFAULT_PROBABILITY": 65,
+                "MODERATE_DEFAULT_PROBABILITY": 203
+              }
+            }
+          }
+        },
+        "region": {
+          "sample_count": 750,
+          "positive_prediction_count": 0,
+          "positive_prediction_rate": 0.0,
+          "group_metrics": {
+            "east": {
+              "sample_count": 157,
+              "non_default_count": 140,
+              "default_count": 17,
+              "positive_prediction_rate": 0.0,
+              "true_positive_rate": 0.0,
+              "false_positive_rate": 0.0
+            },
+            "north": {
+              "sample_count": 130,
+              "non_default_count": 111,
+              "default_count": 19,
+              "positive_prediction_rate": 0.0,
+              "true_positive_rate": 0.0,
+              "false_positive_rate": 0.0
+            },
+            "northeast": {
+              "sample_count": 146,
+              "non_default_count": 132,
+              "default_count": 14,
+              "positive_prediction_rate": 0.0,
+              "true_positive_rate": 0.0,
+              "false_positive_rate": 0.0
+            },
+            "south": {
+              "sample_count": 178,
+              "non_default_count": 151,
+              "default_count": 27,
+              "positive_prediction_rate": 0.0,
+              "true_positive_rate": 0.0,
+              "false_positive_rate": 0.0
+            },
+            "west": {
+              "sample_count": 139,
+              "non_default_count": 122,
+              "default_count": 17,
+              "positive_prediction_rate": 0.0,
+              "true_positive_rate": 0.0,
+              "false_positive_rate": 0.0
+            }
+          },
+          "disparate_impact_ratio": null,
+          "equal_opportunity_difference": 0.0,
+          "equalized_odds_difference": 0.0,
+          "review_status": "INSUFFICIENT_EVIDENCE",
+          "warnings": [
+            "No positive predictions. Approval fairness cannot be established."
+          ],
+          "group_policy_outcomes": {
+            "east": {
+              "sample_count": 157,
+              "non_default_count": 140,
+              "default_count": 17,
+              "approval_count": 0,
+              "review_count": 114,
+              "decline_count": 43,
+              "approval_rate": 0.0,
+              "review_rate": 0.7261,
+              "decline_rate": 0.2739,
+              "good_repayer_approval_rate": 0.0,
+              "default_repayer_approval_rate": 0.0,
+              "mean_predicted_default_probability": 0.1286,
+              "mean_credit_score": 626.2548,
+              "policy_reason_counts": {
+                "HIGH_DEFAULT_PROBABILITY": 43,
+                "MODERATE_DEFAULT_PROBABILITY": 114
+              }
+            },
+            "north": {
+              "sample_count": 130,
+              "non_default_count": 111,
+              "default_count": 19,
+              "approval_count": 0,
+              "review_count": 99,
+              "decline_count": 31,
+              "approval_rate": 0.0,
+              "review_rate": 0.7615,
+              "decline_rate": 0.2385,
+              "good_repayer_approval_rate": 0.0,
+              "default_repayer_approval_rate": 0.0,
+              "mean_predicted_default_probability": 0.1268,
+              "mean_credit_score": 626.6231,
+              "policy_reason_counts": {
+                "HIGH_DEFAULT_PROBABILITY": 31,
+                "MODERATE_DEFAULT_PROBABILITY": 99
+              }
+            },
+            "northeast": {
+              "sample_count": 146,
+              "non_default_count": 132,
+              "default_count": 14,
+              "approval_count": 0,
+              "review_count": 112,
+              "decline_count": 34,
+              "approval_rate": 0.0,
+              "review_rate": 0.7671,
+              "decline_rate": 0.2329,
+              "good_repayer_approval_rate": 0.0,
+              "default_repayer_approval_rate": 0.0,
+              "mean_predicted_default_probability": 0.1287,
+              "mean_credit_score": 624.6712,
+              "policy_reason_counts": {
+                "HIGH_DEFAULT_PROBABILITY": 34,
+                "MODERATE_DEFAULT_PROBABILITY": 112
+              }
+            },
+            "south": {
+              "sample_count": 178,
+              "non_default_count": 151,
+              "default_count": 27,
+              "approval_count": 0,
+              "review_count": 135,
+              "decline_count": 43,
+              "approval_rate": 0.0,
+              "review_rate": 0.7584,
+              "decline_rate": 0.2416,
+              "good_repayer_approval_rate": 0.0,
+              "default_repayer_approval_rate": 0.0,
+              "mean_predicted_default_probability": 0.1277,
+              "mean_credit_score": 625.8483,
+              "policy_reason_counts": {
+                "HIGH_DEFAULT_PROBABILITY": 43,
+                "MODERATE_DEFAULT_PROBABILITY": 135
+              }
+            },
+            "west": {
+              "sample_count": 139,
+              "non_default_count": 122,
+              "default_count": 17,
+              "approval_count": 0,
+              "review_count": 106,
+              "decline_count": 33,
+              "approval_rate": 0.0,
+              "review_rate": 0.7626,
+              "decline_rate": 0.2374,
+              "good_repayer_approval_rate": 0.0,
+              "default_repayer_approval_rate": 0.0,
+              "mean_predicted_default_probability": 0.1271,
+              "mean_credit_score": 626.2806,
+              "policy_reason_counts": {
+                "HIGH_DEFAULT_PROBABILITY": 33,
+                "MODERATE_DEFAULT_PROBABILITY": 106
+              }
+            }
+          }
+        },
+        "age_band": {
+          "sample_count": 750,
+          "positive_prediction_count": 0,
+          "positive_prediction_rate": 0.0,
+          "group_metrics": {
+            "18-25": {
+              "sample_count": 155,
+              "non_default_count": 130,
+              "default_count": 25,
+              "positive_prediction_rate": 0.0,
+              "true_positive_rate": 0.0,
+              "false_positive_rate": 0.0
+            },
+            "26-35": {
+              "sample_count": 154,
+              "non_default_count": 137,
+              "default_count": 17,
+              "positive_prediction_rate": 0.0,
+              "true_positive_rate": 0.0,
+              "false_positive_rate": 0.0
+            },
+            "36-45": {
+              "sample_count": 135,
+              "non_default_count": 121,
+              "default_count": 14,
+              "positive_prediction_rate": 0.0,
+              "true_positive_rate": 0.0,
+              "false_positive_rate": 0.0
+            },
+            "46-55": {
+              "sample_count": 158,
+              "non_default_count": 137,
+              "default_count": 21,
+              "positive_prediction_rate": 0.0,
+              "true_positive_rate": 0.0,
+              "false_positive_rate": 0.0
+            },
+            "55+": {
+              "sample_count": 148,
+              "non_default_count": 131,
+              "default_count": 17,
+              "positive_prediction_rate": 0.0,
+              "true_positive_rate": 0.0,
+              "false_positive_rate": 0.0
+            }
+          },
+          "disparate_impact_ratio": null,
+          "equal_opportunity_difference": 0.0,
+          "equalized_odds_difference": 0.0,
+          "review_status": "INSUFFICIENT_EVIDENCE",
+          "warnings": [
+            "No positive predictions. Approval fairness cannot be established."
+          ],
+          "group_policy_outcomes": {
+            "18-25": {
+              "sample_count": 155,
+              "non_default_count": 130,
+              "default_count": 25,
+              "approval_count": 0,
+              "review_count": 121,
+              "decline_count": 34,
+              "approval_rate": 0.0,
+              "review_rate": 0.7806,
+              "decline_rate": 0.2194,
+              "good_repayer_approval_rate": 0.0,
+              "default_repayer_approval_rate": 0.0,
+              "mean_predicted_default_probability": 0.1266,
+              "mean_credit_score": 626.4258,
+              "policy_reason_counts": {
+                "HIGH_DEFAULT_PROBABILITY": 34,
+                "MODERATE_DEFAULT_PROBABILITY": 121
+              }
+            },
+            "26-35": {
+              "sample_count": 154,
+              "non_default_count": 137,
+              "default_count": 17,
+              "approval_count": 0,
+              "review_count": 113,
+              "decline_count": 41,
+              "approval_rate": 0.0,
+              "review_rate": 0.7338,
+              "decline_rate": 0.2662,
+              "good_repayer_approval_rate": 0.0,
+              "default_repayer_approval_rate": 0.0,
+              "mean_predicted_default_probability": 0.1293,
+              "mean_credit_score": 625.2468,
+              "policy_reason_counts": {
+                "HIGH_DEFAULT_PROBABILITY": 41,
+                "MODERATE_DEFAULT_PROBABILITY": 113
+              }
+            },
+            "36-45": {
+              "sample_count": 135,
+              "non_default_count": 121,
+              "default_count": 14,
+              "approval_count": 0,
+              "review_count": 109,
+              "decline_count": 26,
+              "approval_rate": 0.0,
+              "review_rate": 0.8074,
+              "decline_rate": 0.1926,
+              "good_repayer_approval_rate": 0.0,
+              "default_repayer_approval_rate": 0.0,
+              "mean_predicted_default_probability": 0.1236,
+              "mean_credit_score": 628.163,
+              "policy_reason_counts": {
+                "HIGH_DEFAULT_PROBABILITY": 26,
+                "MODERATE_DEFAULT_PROBABILITY": 109
+              }
+            },
+            "46-55": {
+              "sample_count": 158,
+              "non_default_count": 137,
+              "default_count": 21,
+              "approval_count": 0,
+              "review_count": 109,
+              "decline_count": 49,
+              "approval_rate": 0.0,
+              "review_rate": 0.6899,
+              "decline_rate": 0.3101,
+              "good_repayer_approval_rate": 0.0,
+              "default_repayer_approval_rate": 0.0,
+              "mean_predicted_default_probability": 0.131,
+              "mean_credit_score": 624.3418,
+              "policy_reason_counts": {
+                "HIGH_DEFAULT_PROBABILITY": 49,
+                "MODERATE_DEFAULT_PROBABILITY": 109
+              }
+            },
+            "55+": {
+              "sample_count": 148,
+              "non_default_count": 131,
+              "default_count": 17,
+              "approval_count": 0,
+              "review_count": 114,
+              "decline_count": 34,
+              "approval_rate": 0.0,
+              "review_rate": 0.7703,
+              "decline_rate": 0.2297,
+              "good_repayer_approval_rate": 0.0,
+              "default_repayer_approval_rate": 0.0,
+              "mean_predicted_default_probability": 0.1279,
+              "mean_credit_score": 625.723,
+              "policy_reason_counts": {
+                "HIGH_DEFAULT_PROBABILITY": 34,
+                "MODERATE_DEFAULT_PROBABILITY": 114
+              }
+            }
+          }
+        },
+        "urban_rural": {
+          "sample_count": 750,
+          "positive_prediction_count": 0,
+          "positive_prediction_rate": 0.0,
+          "group_metrics": {
+            "rural": {
+              "sample_count": 207,
+              "non_default_count": 174,
+              "default_count": 33,
+              "positive_prediction_rate": 0.0,
+              "true_positive_rate": 0.0,
+              "false_positive_rate": 0.0
+            },
+            "semi_urban": {
+              "sample_count": 179,
+              "non_default_count": 160,
+              "default_count": 19,
+              "positive_prediction_rate": 0.0,
+              "true_positive_rate": 0.0,
+              "false_positive_rate": 0.0
+            },
+            "urban": {
+              "sample_count": 364,
+              "non_default_count": 322,
+              "default_count": 42,
+              "positive_prediction_rate": 0.0,
+              "true_positive_rate": 0.0,
+              "false_positive_rate": 0.0
+            }
+          },
+          "disparate_impact_ratio": null,
+          "equal_opportunity_difference": 0.0,
+          "equalized_odds_difference": 0.0,
+          "review_status": "INSUFFICIENT_EVIDENCE",
+          "warnings": [
+            "No positive predictions. Approval fairness cannot be established."
+          ],
+          "group_policy_outcomes": {
+            "rural": {
+              "sample_count": 207,
+              "non_default_count": 174,
+              "default_count": 33,
+              "approval_count": 0,
+              "review_count": 156,
+              "decline_count": 51,
+              "approval_rate": 0.0,
+              "review_rate": 0.7536,
+              "decline_rate": 0.2464,
+              "good_repayer_approval_rate": 0.0,
+              "default_repayer_approval_rate": 0.0,
+              "mean_predicted_default_probability": 0.1271,
+              "mean_credit_score": 626.3237,
+              "policy_reason_counts": {
+                "HIGH_DEFAULT_PROBABILITY": 51,
+                "MODERATE_DEFAULT_PROBABILITY": 156
+              }
+            },
+            "semi_urban": {
+              "sample_count": 179,
+              "non_default_count": 160,
+              "default_count": 19,
+              "approval_count": 0,
+              "review_count": 125,
+              "decline_count": 54,
+              "approval_rate": 0.0,
+              "review_rate": 0.6983,
+              "decline_rate": 0.3017,
+              "good_repayer_approval_rate": 0.0,
+              "default_repayer_approval_rate": 0.0,
+              "mean_predicted_default_probability": 0.1343,
+              "mean_credit_score": 621.9832,
+              "policy_reason_counts": {
+                "HIGH_DEFAULT_PROBABILITY": 54,
+                "MODERATE_DEFAULT_PROBABILITY": 125
+              }
+            },
+            "urban": {
+              "sample_count": 364,
+              "non_default_count": 322,
+              "default_count": 42,
+              "approval_count": 0,
+              "review_count": 285,
+              "decline_count": 79,
+              "approval_rate": 0.0,
+              "review_rate": 0.783,
+              "decline_rate": 0.217,
+              "good_repayer_approval_rate": 0.0,
+              "default_repayer_approval_rate": 0.0,
+              "mean_predicted_default_probability": 0.1251,
+              "mean_credit_score": 627.6236,
+              "policy_reason_counts": {
+                "HIGH_DEFAULT_PROBABILITY": 79,
+                "MODERATE_DEFAULT_PROBABILITY": 285
+              }
+            }
+          }
+        }
+      },
+      "model_risk_fairness": {
+        "diagnostic_definition": "Positive if predicted default probability <= decline threshold.",
+        "diagnostic_pd_threshold": 0.15,
+        "is_official_approval": false,
+        "attributes": {
+          "gender": {
+            "sample_count": 750,
+            "positive_prediction_count": 566,
+            "positive_prediction_rate": 0.7547,
+            "group_metrics": {
+              "female": {
+                "sample_count": 247,
+                "non_default_count": 222,
+                "default_count": 25,
+                "positive_prediction_rate": 0.7773,
+                "true_positive_rate": 0.7838,
+                "false_positive_rate": 0.72
+              },
+              "male": {
+                "sample_count": 235,
+                "non_default_count": 198,
+                "default_count": 37,
+                "positive_prediction_rate": 0.7277,
+                "true_positive_rate": 0.7879,
+                "false_positive_rate": 0.4054
+              },
+              "non_binary": {
+                "sample_count": 268,
+                "non_default_count": 236,
+                "default_count": 32,
+                "positive_prediction_rate": 0.7575,
+                "true_positive_rate": 0.7839,
+                "false_positive_rate": 0.5625
+              }
+            },
+            "disparate_impact_ratio": 0.9361,
+            "equal_opportunity_difference": 0.0041,
+            "equalized_odds_difference": 0.3146,
+            "review_status": "REVIEW_NEEDED",
+            "warnings": []
+          },
+          "region": {
+            "sample_count": 750,
+            "positive_prediction_count": 566,
+            "positive_prediction_rate": 0.7547,
+            "group_metrics": {
+              "east": {
+                "sample_count": 157,
+                "non_default_count": 140,
+                "default_count": 17,
+                "positive_prediction_rate": 0.7261,
+                "true_positive_rate": 0.7286,
+                "false_positive_rate": 0.7059
+              },
+              "north": {
+                "sample_count": 130,
+                "non_default_count": 111,
+                "default_count": 19,
+                "positive_prediction_rate": 0.7615,
+                "true_positive_rate": 0.7928,
+                "false_positive_rate": 0.5789
+              },
+              "northeast": {
+                "sample_count": 146,
+                "non_default_count": 132,
+                "default_count": 14,
+                "positive_prediction_rate": 0.7671,
+                "true_positive_rate": 0.7879,
+                "false_positive_rate": 0.5714
+              },
+              "south": {
+                "sample_count": 178,
+                "non_default_count": 151,
+                "default_count": 27,
+                "positive_prediction_rate": 0.7584,
+                "true_positive_rate": 0.8212,
+                "false_positive_rate": 0.4074
+              },
+              "west": {
+                "sample_count": 139,
+                "non_default_count": 122,
+                "default_count": 17,
+                "positive_prediction_rate": 0.7626,
+                "true_positive_rate": 0.7951,
+                "false_positive_rate": 0.5294
+              }
+            },
+            "disparate_impact_ratio": 0.9465,
+            "equal_opportunity_difference": 0.0926,
+            "equalized_odds_difference": 0.2985,
+            "review_status": "REVIEW_NEEDED",
+            "warnings": []
+          },
+          "age_band": {
+            "sample_count": 750,
+            "positive_prediction_count": 566,
+            "positive_prediction_rate": 0.7547,
+            "group_metrics": {
+              "18-25": {
+                "sample_count": 155,
+                "non_default_count": 130,
+                "default_count": 25,
+                "positive_prediction_rate": 0.7806,
+                "true_positive_rate": 0.8462,
+                "false_positive_rate": 0.44
+              },
+              "26-35": {
+                "sample_count": 154,
+                "non_default_count": 137,
+                "default_count": 17,
+                "positive_prediction_rate": 0.7338,
+                "true_positive_rate": 0.7664,
+                "false_positive_rate": 0.4706
+              },
+              "36-45": {
+                "sample_count": 135,
+                "non_default_count": 121,
+                "default_count": 14,
+                "positive_prediction_rate": 0.8074,
+                "true_positive_rate": 0.8264,
+                "false_positive_rate": 0.6429
+              },
+              "46-55": {
+                "sample_count": 158,
+                "non_default_count": 137,
+                "default_count": 21,
+                "positive_prediction_rate": 0.6899,
+                "true_positive_rate": 0.708,
+                "false_positive_rate": 0.5714
+              },
+              "55+": {
+                "sample_count": 148,
+                "non_default_count": 131,
+                "default_count": 17,
+                "positive_prediction_rate": 0.7703,
+                "true_positive_rate": 0.7863,
+                "false_positive_rate": 0.6471
+              }
+            },
+            "disparate_impact_ratio": 0.8544,
+            "equal_opportunity_difference": 0.1381,
+            "equalized_odds_difference": 0.2071,
+            "review_status": "REVIEW_NEEDED",
+            "warnings": []
+          },
+          "urban_rural": {
+            "sample_count": 750,
+            "positive_prediction_count": 566,
+            "positive_prediction_rate": 0.7547,
+            "group_metrics": {
+              "rural": {
+                "sample_count": 207,
+                "non_default_count": 174,
+                "default_count": 33,
+                "positive_prediction_rate": 0.7536,
+                "true_positive_rate": 0.7816,
+                "false_positive_rate": 0.6061
+              },
+              "semi_urban": {
+                "sample_count": 179,
+                "non_default_count": 160,
+                "default_count": 19,
+                "positive_prediction_rate": 0.6983,
+                "true_positive_rate": 0.7375,
+                "false_positive_rate": 0.3684
+              },
+              "urban": {
+                "sample_count": 364,
+                "non_default_count": 322,
+                "default_count": 42,
+                "positive_prediction_rate": 0.783,
+                "true_positive_rate": 0.8106,
+                "false_positive_rate": 0.5714
+              }
+            },
+            "disparate_impact_ratio": 0.8919,
+            "equal_opportunity_difference": 0.0731,
+            "equalized_odds_difference": 0.2376,
+            "review_status": "REVIEW_NEEDED",
+            "warnings": []
+          }
+        }
+      },
+      "policy_reason_analysis": {
+        "overall_reason_counts": {
+          "HIGH_DEFAULT_PROBABILITY": 184,
+          "MODERATE_DEFAULT_PROBABILITY": 566
+        },
+        "reasons_by_decision": {
+          "APPROVE": {},
+          "REVIEW": {
+            "MODERATE_DEFAULT_PROBABILITY": 566
+          },
+          "DECLINE": {
+            "HIGH_DEFAULT_PROBABILITY": 184
+          }
+        },
+        "counting_method": "Applicants per reason; an applicant may have multiple reasons."
+      }
+    }
+  },
+  "model_comparison": {
+    "gender": {
+      "logistic_regression": {
+        "diagnostic_dir": 0.9529,
+        "diagnostic_equal_opportunity_difference": 0.0203,
+        "diagnostic_equalized_odds_difference": 0.3146,
+        "diagnostic_review_status": "REVIEW_NEEDED",
+        "official_approval_rate": 0.0,
+        "official_policy_review_status": "INSUFFICIENT_EVIDENCE"
+      },
+      "xgboost": {
+        "diagnostic_dir": 0.9361,
+        "diagnostic_equal_opportunity_difference": 0.0041,
+        "diagnostic_equalized_odds_difference": 0.3146,
+        "diagnostic_review_status": "REVIEW_NEEDED",
+        "official_approval_rate": 0.0,
+        "official_policy_review_status": "INSUFFICIENT_EVIDENCE"
+      }
+    },
+    "region": {
+      "logistic_regression": {
+        "diagnostic_dir": 0.9189,
+        "diagnostic_equal_opportunity_difference": 0.0534,
+        "diagnostic_equalized_odds_difference": 0.3355,
+        "diagnostic_review_status": "REVIEW_NEEDED",
+        "official_approval_rate": 0.0,
+        "official_policy_review_status": "INSUFFICIENT_EVIDENCE"
+      },
+      "xgboost": {
+        "diagnostic_dir": 0.9465,
+        "diagnostic_equal_opportunity_difference": 0.0926,
+        "diagnostic_equalized_odds_difference": 0.2985,
+        "diagnostic_review_status": "REVIEW_NEEDED",
+        "official_approval_rate": 0.0,
+        "official_policy_review_status": "INSUFFICIENT_EVIDENCE"
+      }
+    },
+    "age_band": {
+      "logistic_regression": {
+        "diagnostic_dir": 0.9114,
+        "diagnostic_equal_opportunity_difference": 0.0779,
+        "diagnostic_equalized_odds_difference": 0.0779,
+        "diagnostic_review_status": "REVIEW_NEEDED",
+        "official_approval_rate": 0.0,
+        "official_policy_review_status": "INSUFFICIENT_EVIDENCE"
+      },
+      "xgboost": {
+        "diagnostic_dir": 0.8544,
+        "diagnostic_equal_opportunity_difference": 0.1381,
+        "diagnostic_equalized_odds_difference": 0.2071,
+        "diagnostic_review_status": "REVIEW_NEEDED",
+        "official_approval_rate": 0.0,
+        "official_policy_review_status": "INSUFFICIENT_EVIDENCE"
+      }
+    },
+    "urban_rural": {
+      "logistic_regression": {
+        "diagnostic_dir": 0.9005,
+        "diagnostic_equal_opportunity_difference": 0.0795,
+        "diagnostic_equalized_odds_difference": 0.1627,
+        "diagnostic_review_status": "REVIEW_NEEDED",
+        "official_approval_rate": 0.0,
+        "official_policy_review_status": "INSUFFICIENT_EVIDENCE"
+      },
+      "xgboost": {
+        "diagnostic_dir": 0.8919,
+        "diagnostic_equal_opportunity_difference": 0.0731,
+        "diagnostic_equalized_odds_difference": 0.2376,
+        "diagnostic_review_status": "REVIEW_NEEDED",
+        "official_approval_rate": 0.0,
+        "official_policy_review_status": "INSUFFICIENT_EVIDENCE"
+      }
+    }
+  },
+  "thresholds": {
+    "minimum_group_size": 30,
+    "minimum_class_count": 10,
+    "minimum_disparate_impact_ratio": 0.8,
+    "maximum_equal_opportunity_difference": 0.05,
+    "maximum_equalized_odds_difference": 0.05,
+    "threshold_type": "Exploratory research screening only"
+  },
+  "limitations": [
+    "Synthetic-data research audit only.",
+    "Both models use the same hypothetical loan request and held-out test applicants.",
+    "Diagnostic risk-screening predictions are not official loan approvals.",
+    "Protected attributes are excluded from model prediction requests.",
+    "Reproducing the split does not prove the saved models were trained on the same dataset version and split.",
+    "Fairness screening thresholds are not legal compliance guarantees.",
+    "This report does not compare model predictive performance or calibration."
+  ]
+}
