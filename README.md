@@ -1,20 +1,35 @@
-# faircredit-aa
+## Member 4 — Fairness, Explainability & Integration
 
-Alternate-data credit scoring for gig workers and MSMEs in India: consent-based cash-flow signals, explainable scores, and a fairness audit.
+### Completed Modules
 
-## Structure
-- `Data_Engineering/` : synthetic data generator, feature pipeline, validation scripts, backend API (in progress)
-  - `generator/` : raw synthetic data (seeded, reproducible)
-  - `features/` : builds the 19 model features from the raw tables
-  - `tests/`, `docs/` : tests and data dictionary
-- Other team members' modules (frontend, model, fairness) are added alongside.
+- **Fairness Auditing:** Implemented Fairlearn-based auditing for Logistic Regression and XGBoost across gender, region, age band and urban/rural attributes.
+- **SHAP Explainability:** Implemented bilingual English and Tamil explanations for the primary Logistic Regression model.
+- **What-If Simulation:** Integrated the existing simulation engine into the scoring service.
+- **Scoring Service:** Integrated Member 3's prediction engine, policy decisions, SHAP explanations and fairness-report access.
+- **Validation:** Evaluated both models on the same 750 test applicants and verified their IDs against the recorded test split.
 
-## Data
-Data files are not stored in Git (`Data_Engineering/data/` is git-ignored). All data is synthetic. `features_final_v1.csv` is the official features file and `protected_attrs.csv` holds the protected attributes. Both are shared separately.
+### Fairness Audit Results
 
-## Reproduce (run from inside `Data_Engineering/`, seed 42)
-1. `python -m generator.run_generator`
-2. `python -m generator.protected_extra`
-3. `python run_pipeline.py`
-4. `python merge_target.py`
-5. `python final_check.py`
+| Decision | Logistic Regression | XGBoost |
+|---|---:|---:|
+| APPROVE | 0 | 0 |
+| REVIEW | 540 | 566 |
+| DECLINE | 210 | 184 |
+
+The diagnostic fairness audit identified disparities requiring further review. The results do not establish legal fairness compliance.
+
+### Files
+
+`fairness_explainability/`
+
+- `fairness_audit.py` — Two-model fairness auditing
+- `shap_explainer.py` — Bilingual SHAP explanations
+- `scoring_service.py` — Scoring and simulation integration
+- `validate_module.py` — Module validation
+- `fairness_audit_report.json` — Generated audit results
+
+### Pending Work
+
+- Integration with Member 2's FastAPI endpoints
+- End-to-end frontend and backend testing
+- Further investigation of the zero-approval outcome
