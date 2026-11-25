@@ -259,13 +259,13 @@ def build_credit_request(row):
 # 6. GENERATE PREDICTIONS FOR ONE MODEL
 # ============================================================
 
-def generate_predictions(test_df, model_name):
+def generate_predictions(test_df, model_name, policy_version):
 
     records = []
 
     total = len(test_df)
 
-    print(f"\nRunning model: {model_name}")
+    print(f"\nRunning model: {model_name}, policy: {policy_version}")
 
     for position, (_, row) in enumerate(
         test_df.iterrows(),
@@ -277,6 +277,7 @@ def generate_predictions(test_df, model_name):
             result = predict_credit(
                 request,
                 model_name=model_name,
+                policy_version=policy_version,
             )
         except Exception as exc:
             raise RuntimeError(
@@ -836,215 +837,55 @@ def build_model_comparison(model_reports):
 # 12. MAIN TWO-MODEL AUDIT
 # ============================================================
 
-def run_fairness_audit(
-    features_path=FEATURES_PATH,
-    protected_path=PROTECTED_PATH,
-    output_json=OUTPUT_JSON,
-):
-
-    print("\n======================================")
-    print(" TWO-MODEL FAIRNESS AUDIT")
-    print("======================================")
-
-    features_df, protected_df = load_audit_data(
-        features_path,
-        protected_path,
-    )
-
-    print(f"\nFinancial records: {len(features_df)}")
-    print(f"Protected records: {len(protected_df)}")
-
-    test_df = prepare_test_data(
-        features_df,
-        protected_df,
-    )
-
-    print(f"Held-out test applicants: {len(test_df)}")
-
-    model_reports = {}
-    applicant_ids_by_model = {}
-
-    for model_name in MODELS:
-
-        predictions_df = generate_predictions(
-            test_df,
-            model_name,
-        )
-
-        applicant_ids_by_model[model_name] = set(
-            predictions_df["applicant_id"]
-        )
-
-        model_reports[model_name] = audit_one_model(
-            test_df,
-            predictions_df,
-            model_name,
-        )
-
-        print(f"\n{model_name} completed.")
-
-        print(
-            "Decisions:",
-            model_reports[model_name][
-                "overall_results"
-            ]["decision_counts"],
-        )
-
-    # Verify that both models evaluated the same IDs.
-    if (
-        applicant_ids_by_model["logistic_regression"]
-        != applicant_ids_by_model["xgboost"]
-    ):
-        raise ValueError(
-            "The models evaluated different applicants."
-        )
-
-    comparison = build_model_comparison(
-        model_reports
-    )
-
-    primary = model_reports[PRIMARY_MODEL]
-
-    # Keep original top-level keys so existing
-    # scoring_service.py continues to work.
-    report = {
-        "report_type": "two_model_fairness_audit",
-        "simulation_only": True,
-        "primary_model": PRIMARY_MODEL,
-        "model_name": PRIMARY_MODEL,
-        "model_versions": primary["model_versions"],
-        "dataset": {
-            "features_path": str(features_path),
-            "protected_path": str(protected_path),
-            "total_financial_records": int(
-                len(features_df)
-            ),
-            "total_protected_records": int(
-                len(protected_df)
-            ),
-            "test_records": int(len(test_df)),
-            "evaluation_split": "test",
-            "split_method": "src.preprocessing.split_dataset",
-            "same_applicants_for_both_models": True,
-        },
-        "target_definition": {
-            "0": "Non-default",
-            "1": "Default",
-            "positive_fairness_label": (
-                "Non-default (TARGET=0)"
-            ),
-        },
-        "decision_context": {
-            "requested_loan_amount": REQUESTED_LOAN_AMOUNT,
-            "requested_tenure_months": REQUESTED_TENURE_MONTHS,
-            "observation_window_months": (
-                OBSERVATION_WINDOW_MONTHS
-            ),
-            "currency": "INR",
-            "hypothetical": True,
-        },
-        "decision_definition": {
-            "positive_decision": "APPROVE",
-            "other_decisions_are_positive": False,
-        },
-        "overall_results": primary["overall_results"],
-        "policy_fairness": primary["policy_fairness"],
-        "model_risk_fairness": primary[
-            "model_risk_fairness"
-        ],
-        "policy_reason_analysis": primary[
-            "policy_reason_analysis"
-        ],
-        "protected_attributes": primary[
-            "policy_fairness"
-        ],
-        "models": model_reports,
-        "model_comparison": comparison,
-        "thresholds": {
-            "minimum_group_size": MIN_GROUP_SIZE,
-            "minimum_class_count": MIN_CLASS_COUNT,
-            "minimum_disparate_impact_ratio": MIN_DIR,
-            "maximum_equal_opportunity_difference": (
-                MAX_EOPP_DIFF
-            ),
-            "maximum_equalized_odds_difference": (
-                MAX_EODDS_DIFF
-            ),
-            "threshold_type": (
-                "Exploratory research screening only"
-            ),
-        },
-        "limitations": [
-            "Synthetic-data research audit only.",
-            "Both models use the same hypothetical "
-            "loan request and held-out test applicants.",
-            "Diagnostic risk-screening predictions "
-            "are not official loan approvals.",
-            "Protected attributes are excluded "
-            "from model prediction requests.",
-            "Reproducing the split does not prove "
-            "the saved models were trained on the "
-            "same dataset version and split.",
-            "Fairness screening thresholds are "
-            "not legal compliance guarantees.",
-            "This report does not compare model "
-            "predictive performance or calibration.",
-        ],
-    }
-
-    output_json = Path(output_json)
-
-    output_json.parent.mkdir(
-        parents=True,
-        exist_ok=True,
-    )
-
-    with open(
-        output_json,
-        "w",
-        encoding="utf-8",
-    ) as file:
-        json.dump(
-            report,
-            file,
-            indent=2,
-            ensure_ascii=False,
-            allow_nan=False,
-        )
-
-    print("\n======================================")
-    print(" TWO-MODEL AUDIT COMPLETED")
-    print("======================================")
-
-    for model_name in MODELS:
-
-        model = model_reports[model_name]
-
-        print(f"\nMODEL: {model_name}")
-
-        print(
-            "Decisions:",
-            model["overall_results"]["decision_counts"],
-        )
-
-        for attribute in PROTECTED_ATTRIBUTES:
-
-            metrics = model[
-                "model_risk_fairness"
-            ]["attributes"][attribute]
-
-            print(
-                f"  {attribute}: "
-                f"DIR={metrics['disparate_impact_ratio']}, "
-                f"EOpp={metrics['equal_opportunity_difference']}, "
-                f"EOdds={metrics['equalized_odds_difference']}, "
-                f"Status={metrics['review_status']}"
-            )
-
-    print(f"\nReport saved to:\n{output_json}")
-
+def run_fairness_audit(features_path=FEATURES_PATH, protected_path=PROTECTED_PATH, output_json=None):
+    from src.config import get_policy_thresholds
+    features, protected = load_audit_data(features_path, protected_path)
+    manifest = pd.read_csv(ROOT / "reports" / "data_splits.csv", dtype={"applicant_id": str})
+    assert not manifest["applicant_id"].duplicated().any()
+    assert not set(FEATURE_COLUMNS).intersection(protected.columns), "Protected feature leakage"
+    report = {"report_type": "two_model_two_policy_audit", "simulation_only": True,
+              "policy_status": "experimental", "fairness_and_risk_approval_required": True,
+              "primary_model": PRIMARY_MODEL, "cohorts": {},
+              "decision_context": {"requested_loan_amount": REQUESTED_LOAN_AMOUNT,
+                                   "requested_tenure_months": REQUESTED_TENURE_MONTHS,
+                                   "observation_window_months": OBSERVATION_WINDOW_MONTHS},
+              "limitations": ["Synthetic data only; validation is policy selection data.",
+                              "Test cohort is a separate evaluation, not for threshold tuning.",
+                              "Exploratory fairness thresholds are not legal compliance guarantees.",
+                              "No uncertainty intervals; small groups require caution."]}
+    for cohort in ("validation", "test"):
+        ids = set(manifest.loc[manifest["split"] == cohort, "applicant_id"])
+        df = features.loc[features["applicant_id"].astype(str).isin(ids)].merge(
+            protected[["applicant_id"] + PROTECTED_ATTRIBUTES], on="applicant_id", how="left", validate="one_to_one", indicator=True)
+        assert len(df) == len(ids) == 750 and (df["_merge"] == "both").all()
+        df = df.drop(columns="_merge")
+        cohort_report = {"sample_count": len(df), "policies": {}}
+        previous = {}
+        for version in ("1.0.0", "1.1.0"):
+            thresholds = get_policy_thresholds(version)
+            models = {}
+            for name in MODELS:
+                pred = generate_predictions(df, name, version)
+                indexed = pred.set_index("applicant_id").sort_index()
+                if version == "1.0.0":
+                    previous[name] = indexed
+                else:
+                    old = previous[name]
+                    assert indexed.index.equals(old.index)
+                    assert np.allclose(indexed["pred_prob"], old["pred_prob"], atol=1e-7, rtol=0)
+                    assert indexed["declined"].equals(old["declined"])
+                models[name] = audit_one_model(df, pred, name)
+                approved = pred.loc[pred["approved"] == 1, "TARGET"]
+                models[name]["overall_results"]["synthetic_default_rate_among_approvals"] = safe_rate(int(approved.sum()), len(approved))
+                print(cohort, version, name, models[name]["overall_results"]["decision_counts"])
+            cohort_report["policies"][version] = {"approve_below": thresholds.approve_below,
+                "decline_above": thresholds.decline_above, "models": models,
+                "model_comparison": build_model_comparison(models)}
+        report["cohorts"][cohort] = cohort_report
+    output = Path(output_json or ROOT / "fairness_explainability" / "fairness_policy_comparison.json")
+    output.write_text(json.dumps(report, indent=2, ensure_ascii=False, allow_nan=False), encoding="utf-8")
+    print(f"Report saved: {output}")
     return report
-
 
 if __name__ == "__main__":
     run_fairness_audit()

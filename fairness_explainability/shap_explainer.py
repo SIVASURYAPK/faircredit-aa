@@ -4,7 +4,8 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
-import shap
+from xgboost import DMatrix
+from src.config import DATASET_PATH, SPLIT_MANIFEST_PATH, FEATURE_COLUMNS, MODEL_VERSION, ROLLBACK_POLICY_VERSION
 
 from src.predictor import load_model, prepare_input
 from src.schema import CreditRequest
@@ -153,17 +154,18 @@ class CreditExplainer:
     def _create_explainer(self):
 
         if self.model_name == "logistic_regression":
-            # Exact linear contribution decomposition
-            # relative to zero in transformed space.
+            splits = pd.read_csv(SPLIT_MANIFEST_PATH).set_index("applicant_id")
+            dataset = pd.read_csv(DATASET_PATH).set_index("applicant_id")
+            if not splits.index.is_unique or not dataset.index.is_unique:
+                raise ValueError("Duplicate applicant IDs")
+            train_ids = splits.index[splits["split"] == "train"]
+            if len(train_ids) == 0:
+                raise ValueError("Training background is empty")
+            train = dataset.loc[train_ids, FEATURE_COLUMNS]
+            background = self.preprocessor.transform(train)
+            self.background_mean = background.to_numpy().mean(axis=0)
             return None
-
-        if self.model_name == "xgboost":
-            return shap.TreeExplainer(
-                self.classifier,
-                model_output="raw"
-            )
-
-        raise ValueError("Unsupported model")
+        return self.classifier.get_booster()
 
     # --------------------------------------------------------
     # PREPARE APPLICANT FEATURES
@@ -218,10 +220,10 @@ class CreditExplainer:
             )
 
             contributions = (
-                X_transformed[0] * coefficients
+                (X_transformed[0] - self.background_mean) * coefficients
             )
 
-            base_value = intercept
+            base_value = intercept + float(self.background_mean @ coefficients)
 
             # FIX: Pass named columns to the classifier.
             # This avoids the sklearn feature-name warning.
@@ -238,34 +240,16 @@ class CreditExplainer:
 
         else:
 
-            explanation = self.explainer(
-                X_transformed
-            )
-
-            values = np.asarray(
-                explanation.values
-            )
-
-            if values.ndim != 2 or values.shape[0] != 1:
-                raise ValueError(
-                    "Unexpected XGBoost SHAP output shape: "
-                    f"{values.shape}"
-                )
-
-            contributions = values[0]
-
-            base_value = float(
-                np.asarray(
-                    explanation.base_values
-                ).reshape(-1)[0]
-            )
-
-            raw_margin = float(
-                self.classifier.predict(
-                    X_transformed,
-                    output_margin=True
-                )[0]
-            )
+            X_named = pd.DataFrame(X_transformed, columns=self.feature_names)
+            best = self.explainer.attr("best_iteration")
+            iteration_range = (0, int(best) + 1) if best is not None else (0, 0)
+            values = self.explainer.predict(
+                DMatrix(X_named, missing=self.classifier.missing,
+                        enable_categorical=self.classifier.enable_categorical),
+                pred_contribs=True, iteration_range=iteration_range
+            )[0]
+            contributions, base_value = values[:-1], float(values[-1])
+            raw_margin = float(self.classifier.predict(X_named, output_margin=True)[0])
 
         if len(contributions) != len(self.feature_names):
             raise ValueError(
@@ -282,8 +266,8 @@ class CreditExplainer:
         if not np.isclose(
             reconstructed_margin,
             raw_margin,
-            rtol=1e-4,
-            atol=1e-4
+            rtol=0,
+            atol=1e-5
         ):
             raise ValueError(
                 "Explanation does not reconstruct "
@@ -363,8 +347,10 @@ class CreditExplainer:
             reasons.append({
                 "feature": feature,
                 "label": label,
-                "transformed_value": round(
-                    transformed_value, 6
+                "transformed_value": (
+                    round(transformed_value, 6)
+                    if np.isfinite(transformed_value)
+                    else None
                 ),
                 "shap_value": round(
                     contribution, 6
@@ -379,21 +365,21 @@ class CreditExplainer:
             "explained_output": "uncalibrated_raw_margin",
             "output_units": "log_odds",
             "baseline_type": (
-                "zero_transformed_feature_reference"
+                "synthetic_training_background"
                 if self.model_name == "logistic_regression"
-                else "tree_shap_reference"
+                else "fitted_tree_path_statistics"
             ),
-            "base_value": round(base_value, 6),
-            "raw_margin": round(raw_margin, 6),
+            "model_version": MODEL_VERSION,
+            "base_value": float(base_value),
+            "transformed_feature_contributions": dict(zip(self.feature_names, map(float, contributions), strict=True)),
+            "raw_margin": float(raw_margin),
             "shap_reason_codes": reasons,
             "simulation_only": True,
             "disclaimer": (
                 "These contributions explain the underlying "
                 "classifier's raw log-odds, not the calibrated "
                 "default probability, credit score, or final "
-                "policy decision. Logistic Regression uses a "
-                "zero transformed-feature reference rather "
-                "than a population-average SHAP baseline."
+                "policy decision. Contributions are not causal effects."
             )
         }
 
@@ -405,7 +391,8 @@ class CreditExplainer:
         self,
         payload,
         updates,
-        lang="en"
+        lang="en",
+        *, policy_version=ROLLBACK_POLICY_VERSION
     ):
 
         if lang not in ("en", "ta"):
@@ -418,7 +405,8 @@ class CreditExplainer:
         result = simulate(
             payload,
             updates,
-            model_name=self.model_name
+            model_name=self.model_name,
+            policy_version=policy_version
         )
 
         result["language"] = lang
